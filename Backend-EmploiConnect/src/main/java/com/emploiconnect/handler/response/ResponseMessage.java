@@ -35,7 +35,7 @@ public class ResponseMessage {
         return new ResponseEntity(new ResponseMessage(HttpStatus.BAD_REQUEST.value(), message), HttpStatus.BAD_REQUEST);
     }
 
-    public static ResponseEntity<ResponseMessage> notFound(String message){
-        return new ResponseEntity<ResponseMessage>(new ResponseMessage(HttpStatus.NOT_FOUND.value(), message), HttpStatus.NOT_FOUND);
+    public static ResponseEntity notFound(String message){
+        return new ResponseEntity(new ResponseMessage(HttpStatus.NOT_FOUND.value(), message), HttpStatus.NOT_FOUND);
     }
 }
