@@ -11,5 +11,6 @@ import java.util.List;
 public interface OfferService {
     OfferResponseDto createOffer(OfferRequestDto offreDto);
     public List< OfferResponseDto> getAllOffers();
-
+    public  OfferResponseDto updateOffer(OfferRequestDto offreDto,Long id);
+    void deleteOffer(Long id);
 }

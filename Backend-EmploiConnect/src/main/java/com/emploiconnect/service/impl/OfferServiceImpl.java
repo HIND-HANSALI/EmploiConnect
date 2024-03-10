@@ -47,5 +47,39 @@ public class OfferServiceImpl implements OfferService {
     }*/
 
 
+    @Override
+    public OfferResponseDto updateOffer(OfferRequestDto offreDto,Long id){
 
+        // Retrieve the existing offer from the database based on its ID
+        Offer existingOffer = offerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + id));
+
+        // Update the fields of the existing offer with the data from the OfferRequestDto
+        /*modelMapper.map(offreDto, existingOffer);
+        existingOffer.setUpdatedAt(new Date());*/
+
+        // Update the fields of the existing offer with the data from the OfferRequestDto
+        existingOffer.setTitle(offreDto.getTitle());
+        existingOffer.setDescription(offreDto.getDescription());
+        existingOffer.setContrat(offreDto.getContrat());
+        existingOffer.setUpdatedAt(new Date());
+
+        // Save the updated offer back to the database
+        Offer updatedOffer = offerRepository.save(existingOffer);
+
+        // Map the updated offer to an OfferResponseDto
+        OfferResponseDto offerResponseDto = modelMapper.map(updatedOffer, OfferResponseDto.class);
+
+        // Return the OfferResponseDto
+        return offerResponseDto;
+    }
+
+    @Override
+    public void deleteOffer(Long id) {
+
+        Offer existingOffer = offerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + id));
+
+        offerRepository.delete(existingOffer);
+    }
 }

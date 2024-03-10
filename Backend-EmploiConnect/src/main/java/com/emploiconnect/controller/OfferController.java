@@ -38,5 +38,20 @@ public class OfferController {
         }
 
     }
- 
+    @PutMapping("/{id}")
+    public ResponseEntity<OfferResponseDto> updateOffer(@RequestBody OfferRequestDto offerRequestDto, @PathVariable Long id) {
+        System.out.println(offerRequestDto);
+        OfferResponseDto updatedOffer = offerService.updateOffer(offerRequestDto, id);
+        if(updatedOffer==null){
+            return ResponseMessage.badRequest("Offer not updated");
+        }else{
+            return ResponseMessage.ok("Offer updated successfully" ,updatedOffer );
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteOffer(@PathVariable Long id) {
+
+        offerService.deleteOffer(id);
+        return ResponseEntity.ok("Competition deleted successfully");
+    }
 }
