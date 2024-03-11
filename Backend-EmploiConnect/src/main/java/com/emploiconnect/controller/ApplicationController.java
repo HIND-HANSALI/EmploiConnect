@@ -38,5 +38,32 @@ public class ApplicationController {
         }
     }
 
-
+    @GetMapping("/reject/count")
+    public ResponseEntity<Long> countRejectedApplications() {
+        long count = applicationService.countRejectedApplications();
+        return ResponseEntity.ok(count);
+    }
+    @GetMapping("/approve/count")
+    public ResponseEntity<Long> countApprovedApplications() {
+        long count = applicationService.countApprovedApplications();
+        return ResponseEntity.ok(count);
+    }
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<ApplicationResponseDto> updateStatusToRejected(@PathVariable Long id) {
+        ApplicationResponseDto updatedApplication = applicationService.updateStatusToRejected(id);
+        if (updatedApplication != null) {
+            return ResponseMessage.ok("rejected Success" ,updatedApplication );
+        } else {
+            return ResponseMessage.notFound("Application not found");
+        }
+    }
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<ApplicationResponseDto> updateStatusToApproved(@PathVariable Long id) {
+        ApplicationResponseDto updatedApplication = applicationService.updateStatusToApproved(id);
+        if (updatedApplication != null) {
+            return ResponseMessage.ok("approved Success" ,updatedApplication );
+        } else {
+            return ResponseMessage.notFound("Application not found");
+        }
+    }
 }

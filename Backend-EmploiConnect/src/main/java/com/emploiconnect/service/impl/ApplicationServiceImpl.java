@@ -63,5 +63,41 @@ public class ApplicationServiceImpl implements ApplicationService {
         // Return the ApplicationResponseDto
         return applicationResponseDto;
     }
+    @Override
+    public ApplicationResponseDto updateStatusToRejected(Long id){
 
+        Application existingApplication = applicationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found with id: " + id));
+
+        // Update the status of the existing application to "REJECTED"
+        existingApplication.setStatus(ApplicationStatus.REJECTED);
+
+        Application updatedApplication = applicationRepository.save(existingApplication);
+
+        // Map the updated application to an ApplicationResponseDto
+        ApplicationResponseDto applicationResponseDto = modelMapper.map(updatedApplication, ApplicationResponseDto.class);
+
+        // Return the ApplicationResponseDto
+        return applicationResponseDto;
+    }
+    @Override
+    public ApplicationResponseDto updateStatusToApproved(Long id){
+
+        Application existingApplication = applicationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found with id: " + id));
+
+        existingApplication.setStatus(ApplicationStatus.APPROVED);
+        Application updatedApplication = applicationRepository.save(existingApplication);
+        ApplicationResponseDto applicationResponseDto = modelMapper.map(updatedApplication, ApplicationResponseDto.class);
+        return applicationResponseDto;
+    }
+
+    @Override
+    public long countRejectedApplications() {
+        return applicationRepository.countByStatus(ApplicationStatus.REJECTED);
+    }
+    @Override
+    public long countApprovedApplications() {
+        return applicationRepository.countByStatus(ApplicationStatus.APPROVED);
+    }
 }

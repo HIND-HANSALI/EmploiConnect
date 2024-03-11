@@ -10,6 +10,11 @@ import java.util.List;
 @Component
 public interface ApplicationService {
     List<ApplicationResponseDto> getAllApplications();
-    ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto);
 
+    ApplicationResponseDto updateStatusToRejected(Long id);
+
+    ApplicationResponseDto updateStatusToApproved(Long id);
+    ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto);
+    long countRejectedApplications();
+    long countApprovedApplications();
 }
