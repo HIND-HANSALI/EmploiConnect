@@ -35,5 +35,33 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     }
 
+    @Override
+    public ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto) {
+        // Create a new Application entity
+        Application application = new Application();
+        application.setTitle(applicationRequestDto.getTitle());
+        application.setCv(applicationRequestDto.getCv());
+        application.setProfile(applicationRequestDto.getProfile());
+        application.setStatus(ApplicationStatus.PENDING);
+
+        // Retrieve the offer from the database based on its ID
+        Offer offer = offerRepository.findById(applicationRequestDto.getOfferId())
+                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
+        application.setOffer(offer);
+
+        // Retrieve the user from the database based on its ID
+        User user = userRepository.findById(applicationRequestDto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + applicationRequestDto.getUserId()));
+        application.setUser(user);
+
+        // Save the application to the database
+        Application savedApplication = applicationRepository.save(application);
+
+        // Map the saved application to an ApplicationResponseDto
+        ApplicationResponseDto applicationResponseDto = modelMapper.map(savedApplication, ApplicationResponseDto.class);
+
+        // Return the ApplicationResponseDto
+        return applicationResponseDto;
+    }
 
 }

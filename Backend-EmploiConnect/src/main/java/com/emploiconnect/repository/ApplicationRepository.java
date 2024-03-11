@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-    
 }

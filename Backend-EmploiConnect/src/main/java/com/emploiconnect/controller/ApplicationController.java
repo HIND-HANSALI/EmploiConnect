@@ -27,5 +27,16 @@ public class ApplicationController {
             return ResponseMessage.ok("Success" ,applications );
         }
     }
+    @PostMapping
+    public ResponseEntity<ApplicationResponseDto> createApplication(@RequestBody ApplicationRequestDto applicationRequestDto) {
+        ApplicationResponseDto createdApplication = applicationService.createApplication(applicationRequestDto);
+            //return new ResponseEntity<>(createdApplication, HttpStatus.CREATED);
+        if(createdApplication ==null){
+            return ResponseMessage.badRequest("Application not created");
+        }else{
+            return ResponseMessage.created("Application created successfully" ,createdApplication);
+        }
+    }
+
 
 }

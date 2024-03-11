@@ -10,6 +10,6 @@ import java.util.List;
 @Component
 public interface ApplicationService {
     List<ApplicationResponseDto> getAllApplications();
-
+    ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto);
 
 }
