@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     long countByStatus(ApplicationStatus status);
+    boolean existsByUserIdAndOfferId(Long userId, Long offerId);
 }

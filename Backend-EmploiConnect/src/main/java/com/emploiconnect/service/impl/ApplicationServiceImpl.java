@@ -7,6 +7,7 @@ import com.emploiconnect.entity.Application;
 import com.emploiconnect.entity.Offer;
 import com.emploiconnect.entity.User;
 import com.emploiconnect.enums.ApplicationStatus;
+import com.emploiconnect.handler.exception.OperationException;
 import com.emploiconnect.handler.exception.ResourceNotFoundException;
 import com.emploiconnect.repository.ApplicationRepository;
 import com.emploiconnect.repository.OfferRepository;
@@ -53,6 +54,14 @@ public class ApplicationServiceImpl implements ApplicationService {
         User user = userRepository.findById(applicationRequestDto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + applicationRequestDto.getUserId()));
         application.setUser(user);
+
+        // Check if the user has already applied for the offer
+        boolean isUserApplied = applicationRepository.existsByUserIdAndOfferId(
+                applicationRequestDto.getUserId(), applicationRequestDto.getOfferId());
+
+        if (isUserApplied) {
+            throw new OperationException("Candidat is already registered for the offer");
+        }
 
         // Save the application to the database
         Application savedApplication = applicationRepository.save(application);
