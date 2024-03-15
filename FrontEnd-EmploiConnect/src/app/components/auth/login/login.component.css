@@ -1,0 +1,10 @@
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('https://i.pinimg.com/564x/9d/29/8e/9d298e2f3befdbb41a59ba92949b5e62.jpg');
+  background-size: cover;
+  background-position: center center;
+}
