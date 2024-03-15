@@ -25,7 +25,7 @@ export class LoginComponent {
 
         localStorage.setItem('role', response.role.name);
 
-        this.route.navigate(["home"])
+        this.route.navigate(["offers"])
       },
       (error) => {
         
