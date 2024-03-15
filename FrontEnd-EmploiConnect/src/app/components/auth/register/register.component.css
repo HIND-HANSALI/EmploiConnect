@@ -1,0 +1,10 @@
+.register,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('https://i.pinimg.com/736x/b0/9e/05/b09e051a843e73b2b39d190dc9cefecc.jpg');
+  background-size: cover;
+  background-position: center center;
+}
