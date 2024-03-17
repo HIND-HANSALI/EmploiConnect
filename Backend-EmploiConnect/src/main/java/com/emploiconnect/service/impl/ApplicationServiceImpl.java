@@ -15,6 +15,8 @@ import com.emploiconnect.repository.UserRepository;
 import com.emploiconnect.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +39,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto) {
+    public ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto,Long offerId) {
         // Create a new Application entity
         Application application = new Application();
         application.setTitle(applicationRequestDto.getTitle());
@@ -46,13 +48,29 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setStatus(ApplicationStatus.PENDING);
 
         // Retrieve the offer from the database based on its ID
-        Offer offer = offerRepository.findById(applicationRequestDto.getOfferId())
+        /*Offer offer = offerRepository.findById(applicationRequestDto.getOfferId())
+                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
+        application.setOffer(offer);*/
+
+        Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
         application.setOffer(offer);
 
+        //Retrieve the Authentication object
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Extract the email or username of the authenticated user
+        String userEmail = authentication.getName(); // Assuming email is used for authentication
+        String message = "Competitions for current user: " + userEmail;
+        // Step 3: Query the database to find the member by email
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found for email: " + userEmail));
+
         // Retrieve the user from the database based on its ID
-        User user = userRepository.findById(applicationRequestDto.getUserId())
+        /* User user = userRepository.findById(applicationRequestDto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + applicationRequestDto.getUserId()));
+                */
+
         application.setUser(user);
 
         // Check if the user has already applied for the offer
@@ -108,5 +126,42 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public long countApprovedApplications() {
         return applicationRepository.countByStatus(ApplicationStatus.APPROVED);
+    }
+
+    @Override
+    public ApplicationResponseDto createApplicationAdmin(ApplicationRequestDto applicationRequestDto) {
+        // Create a new Application entity
+        Application application = new Application();
+        application.setTitle(applicationRequestDto.getTitle());
+        application.setCv(applicationRequestDto.getCv());
+        application.setProfile(applicationRequestDto.getProfile());
+        application.setStatus(ApplicationStatus.PENDING);
+
+        // Retrieve the offer from the database based on its ID
+        Offer offer = offerRepository.findById(applicationRequestDto.getOfferId())
+                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
+        application.setOffer(offer);
+
+        // Retrieve the user from the database based on its ID
+        User user = userRepository.findById(applicationRequestDto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + applicationRequestDto.getUserId()));
+        application.setUser(user);
+
+        // Check if the user has already applied for the offer
+        boolean isUserApplied = applicationRepository.existsByUserIdAndOfferId(
+                applicationRequestDto.getUserId(), applicationRequestDto.getOfferId());
+
+        if (isUserApplied) {
+            throw new OperationException("Candidat is already registered for the offer");
+        }
+
+        // Save the application to the database
+        Application savedApplication = applicationRepository.save(application);
+
+        // Map the saved application to an ApplicationResponseDto
+        ApplicationResponseDto applicationResponseDto = modelMapper.map(savedApplication, ApplicationResponseDto.class);
+
+        // Return the ApplicationResponseDto
+        return applicationResponseDto;
     }
 }

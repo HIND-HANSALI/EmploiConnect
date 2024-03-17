@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/applications")
+@RequestMapping("/api/v1/applications")
 public class ApplicationController {
     private final ApplicationService applicationService;
 
@@ -24,12 +24,13 @@ public class ApplicationController {
         if(applications.isEmpty()) {
             return ResponseMessage.notFound("Application not found");
         }else {
-            return ResponseMessage.ok("Success" ,applications );
+            return new ResponseEntity<>(applications, HttpStatus.OK);
+            //return ResponseMessage.ok("Success" ,applications );
         }
     }
-    @PostMapping
-    public ResponseEntity<ApplicationResponseDto> createApplication(@RequestBody ApplicationRequestDto applicationRequestDto) {
-        ApplicationResponseDto createdApplication = applicationService.createApplication(applicationRequestDto);
+    @PostMapping("/{offerId}")
+    public ResponseEntity<ApplicationResponseDto> createApplication(@RequestBody ApplicationRequestDto applicationRequestDto,@PathVariable Long offerId) {
+        ApplicationResponseDto createdApplication = applicationService.createApplication(applicationRequestDto,offerId);
             //return new ResponseEntity<>(createdApplication, HttpStatus.CREATED);
         if(createdApplication ==null){
             return ResponseMessage.badRequest("Application not created");
@@ -64,6 +65,16 @@ public class ApplicationController {
             return ResponseMessage.ok("approved Success" ,updatedApplication );
         } else {
             return ResponseMessage.notFound("Application not found");
+        }
+    }
+    @PostMapping("/admin")
+    public ResponseEntity<ApplicationResponseDto> createApplicationAdmin(@RequestBody ApplicationRequestDto applicationRequestDto) {
+        ApplicationResponseDto createdApplication = applicationService.createApplicationAdmin(applicationRequestDto);
+        //return new ResponseEntity<>(createdApplication, HttpStatus.CREATED);
+        if(createdApplication ==null){
+            return ResponseMessage.badRequest("Application not created");
+        }else{
+            return ResponseMessage.created("Application created successfully" ,createdApplication);
         }
     }
 }

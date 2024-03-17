@@ -14,7 +14,8 @@ public interface ApplicationService {
     ApplicationResponseDto updateStatusToRejected(Long id);
 
     ApplicationResponseDto updateStatusToApproved(Long id);
-    ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto);
+    ApplicationResponseDto createApplication(ApplicationRequestDto applicationRequestDto,Long offerId);
+    ApplicationResponseDto createApplicationAdmin(ApplicationRequestDto applicationRequestDto);
     long countRejectedApplications();
     long countApprovedApplications();
 }
