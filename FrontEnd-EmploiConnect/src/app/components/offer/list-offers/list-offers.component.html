@@ -9,7 +9,7 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" *ngFor="let offer of offers" data-aos="zoom-in" data-aos-delay="100">
           <div class="icon-box iconbox-blue">
             <div class="icon">
               <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -17,17 +17,17 @@
               </svg>
               <i class="bx bxl-dribbble"></i>
             </div>
-            <h4><a href="">Lorem Ipsum</a></h4>
-            <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            <p>date de publication</p>
+            <h4><a href="">{{ offer.title }}</a></h4>
+            <p>{{ offer.description }}</p>
+            <p>Date de publication: {{ offer.createdAt | date }}</p>
           <div class=" d-flex align-items-center justify-content-between mt-5">
-            <p class="mb-0">Type Contract</p>
-            <button class="applynow">Apply Now</button>
+            <p class="mb-0"> Contract: {{ offer.contrat }}</p>
+            <button class="applynow" [routerLink]="['/applications/register', offer.id]">Apply Now</button>
             </div>
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+        <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
           <div class="icon-box iconbox-orange ">
             <div class="icon">
               <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -38,9 +38,9 @@
             <h4><a href="">Sed Perspiciatis</a></h4>
             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
           </div>
-        </div>
+        </div> -->
 
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
+        <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
           <div class="icon-box iconbox-pink">
             <div class="icon">
               <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +90,7 @@
             <h4><a href="">Divera Don</a></h4>
             <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
