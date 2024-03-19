@@ -1,0 +1,99 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+
+    <div class="main">
+        <nav class="navbar navbar-expand px-4 py-3">
+            <form action="#" class="d-none d-sm-inline-block">
+
+            </form>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="/account.png" class="avatar img-fluid" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end rounded">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+       <main class="content px-3 py-4">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <!-- <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3> -->
+                    <div class="student-list-header d-flex justify-content-between align-items-center py-2">
+                        <div class="fw-bold fs-4 mb-3">Admin Dashboard</div>
+                        <div class="btn-add d-flex gap-3 align-items-center">
+                            <div class="short">
+                                <a class="btn add" href="/dashboard/create-offer"><i class="lni lni-plus"></i>Add Offer</a>
+                            </div>
+                            <!-- <button class="btn btn-primary">Save</button>
+                            <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_employee"><i class="fa-solid fa-plus"></i> Add
+                                Employee</a> -->
+                        </div>
+                    </div>
+                   
+                    <h3 class="fw-bold fs-4 my-3">Offers
+                    </h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="highlight">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Contrat</th>
+                                        <th scope="col">Date de publication</th>
+                                        
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  *ngFor="let offer of offers">
+                                        <th scope="row">{{ offer.id}}</th>
+                                        <td>{{ offer.title }}</td>
+                                        <td>{{ offer.description }}</td>
+                                        <td>{{ offer.createdAt | date }}</td>
+                                        <td>{{ offer.contrat }}</td>
+                                        <td class=" ">
+                                            <a href="" [routerLink]="['/dashboard/edit-offer', offer.id]"><i class="lni  lni-pencil-alt mx-5 text-dark"></i></a>
+                                            <button class="btn btn-link p-0 border-0" href="" (click)="deleteOffer(offer.id)"><i class="lni lni-trash-can text-dark"></i></button>
+                                          </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-body-secondary">
+                    <div class="col-6 text-start ">
+                        <a class="text-body-secondary" href=" #">
+                            <strong>Hind</strong>
+                        </a>
+                    </div>
+                    <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Contact</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">About Us</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Terms & Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
