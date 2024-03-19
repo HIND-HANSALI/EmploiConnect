@@ -12,7 +12,11 @@ import { CreateOfferComponent } from './components/offer/create-offer/create-off
 import { ListOffersComponent } from './components/offer/list-offers/list-offers.component';
 import { ListApplicationsComponent } from './components/application/list-applications/list-applications.component';
 import { RegisterAppliactionComponent } from './components/application/register-appliaction/register-appliaction.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
+import { ListCandidatsComponent } from './components/candidat/list-candidats/list-candidats.component';
+import { ListOffersAdminComponent } from './components/offer/list-offers-admin/list-offers-admin.component';
+import { UpdateOfferComponent } from './components/offer/update-offer/update-offer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,15 +28,21 @@ import { FormsModule } from '@angular/forms';
     CreateOfferComponent,
     ListOffersComponent,
     ListApplicationsComponent,
-    RegisterAppliactionComponent
+    RegisterAppliactionComponent,
+    ListCandidatsComponent,
+    ListOffersAdminComponent,
+    UpdateOfferComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
