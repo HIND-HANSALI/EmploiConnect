@@ -45,6 +45,13 @@ public class OfferServiceImpl implements OfferService {
   /*  private OfferResponseDto convertToDto(Offer offer) {
         return modelMapper.map(offer, OfferResponseDto.class);
     }*/
+  @Override
+  public OfferResponseDto getOfferById(Long id){
+
+      Offer offer=offerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Offer id " + id + " not found"));
+      return modelMapper.map(offer, OfferResponseDto.class);
+
+  }
 
 
     @Override

@@ -2,15 +2,17 @@ package com.emploiconnect.controller;
 
 import com.emploiconnect.dto.request.OfferRequestDto;
 import com.emploiconnect.dto.response.OfferResponseDto;
+import com.emploiconnect.handler.exception.ResourceNotFoundException;
 import com.emploiconnect.handler.response.ResponseMessage;
 import com.emploiconnect.service.OfferService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/offers")
+@RequestMapping("/api/v1/offers")
 public class OfferController {
     private final OfferService offerService;
 
@@ -24,7 +26,18 @@ public class OfferController {
         if(offers.isEmpty()) {
             return ResponseMessage.notFound("Offer not found");
         }else {
-            return ResponseMessage.ok("Success" ,offers );
+            //return ResponseMessage.ok("Success" ,offers );
+            return new ResponseEntity<>(offers, HttpStatus.OK);
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<OfferResponseDto> getOfferById(@PathVariable Long id){
+        try {
+            OfferResponseDto offer = offerService.getOfferById(id);
+            return ResponseEntity.ok(offer);
+
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
     @PostMapping
@@ -49,9 +62,9 @@ public class OfferController {
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteOffer(@PathVariable Long id) {
+    public void deleteOffer(@PathVariable Long id) {
 
-        offerService.deleteOffer(id);
-        return ResponseEntity.ok("Competition deleted successfully");
+         offerService.deleteOffer(id);
+        //return ResponseEntity.ok("Competition deleted successfully");
     }
 }
