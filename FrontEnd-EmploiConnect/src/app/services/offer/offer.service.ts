@@ -27,6 +27,8 @@ export class OfferService {
   getOfferById(offerId: number): Observable<OfferResponseDTO> {
     return this.http.get<OfferResponseDTO>(`${environment.apiUrl}/offers/${offerId}`);
   }
- 
+  deleteOffer(offerId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/offers/${offerId}`);
+  }
 
 }

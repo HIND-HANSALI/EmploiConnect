@@ -33,7 +33,6 @@ export class ListOffersAdminComponent {
       this.offerService.deleteOffer(offerId).subscribe(
         () => {
           console.log('Offer with code ${id} deleted successfully');
-          // this.router.navigate(['/dashboard/offers']);
           this.loadOffers();
         },
         error => {
