@@ -12,10 +12,18 @@ export class ApplicationService {
 
   constructor(private http: HttpClient) { }
 
- 
+  saveApplication(application: ApplicationRequestDto,offerId:number): Observable<ApplicationRequestDto> {
+    return this.http.post<ApplicationRequestDto>(`${environment.apiUrl}/applications/${offerId}`,application);
+  }
 
   getAllApplications(): Observable<ApplicationResponseDTO[]> {
     return this.http.get<ApplicationResponseDTO[]>(`${environment.apiUrl}/applications`);
   }
- 
+  approveApplication(id: number): Observable<ApplicationResponseDTO> {
+    return this.http.put<any>(`${environment.apiUrl}/applications/${id}/approve`, {});
+  }
+
+  rejectApplication(id: number): Observable<ApplicationResponseDTO> {
+    return this.http.put<any>(`${environment.apiUrl}/applications/${id}/reject`, {});
+  }
 }
