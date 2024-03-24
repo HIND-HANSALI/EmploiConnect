@@ -54,11 +54,15 @@
                                         <td>{{ application.title }}</td>
                                         <td>{{ application.user.email }}</td>
                                         <td>{{application.offer.contrat}}</td>
-                                        <td>{{ application.status }}</td>
+                                        <td [ngClass]="{
+                                            'text-success': application.status === 'APPROVED',
+                                            'text-danger': application.status === 'REJECTED',
+                                            'text-warning': application.status === 'PENDING'
+                                        }">{{ application.status }}</td>
                                         <td>{{ application.cv}}</td>
                                         <td class=" ">
-                                            <a href=""><i class="lni lni-checkmark-circle fw-bold fs-5 mx-5 text-success"></i></a> 
-                                            <a href=""><i class="lni lni-ban text-danger fw-bold fs-5"></i></a> 
+                                            <button href="" class="btn btn-link p-0 border-0" (click)="approveApplication(application.id)"><i class="lni lni-checkmark-circle fw-bold fs-5 mx-5 text-success"></i></button> 
+                                            <button href="" class="btn btn-link p-0 border-0" (click)="rejectApplication(application.id)"><i class="lni lni-ban text-danger fw-bold fs-5"></i></button> 
                                           </td>
                                     </tr>
                                 </tbody>

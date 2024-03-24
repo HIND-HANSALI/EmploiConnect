@@ -28,4 +28,27 @@ export class ListApplicationsComponent {
       }
     );
   }
+  approveApplication(id: number): void {
+    this.applicationService.approveApplication(id).subscribe(
+      (response) => {
+        console.log('Application approved successfully:', response);
+        this.loadApplications();
+      },
+      (error) => {
+        console.error('Error approving application:', error);
+      }
+    );
+  }
+
+  rejectApplication(id: number): void {
+    this.applicationService.rejectApplication(id).subscribe(
+      (response) => {
+        console.log('Application rejected successfully:', response);
+        this.loadApplications();
+      },
+      (error) => {
+        console.error('Error rejecting application:', error);
+      }
+    );
+  }
 }
