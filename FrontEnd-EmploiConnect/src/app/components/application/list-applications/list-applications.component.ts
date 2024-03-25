@@ -11,6 +11,10 @@ import { NavbarService } from 'src/app/services/navbar/navbar.service';
 export class ListApplicationsComponent {
   applications: ApplicationResponseDTO[] = [];
   constructor(private navbarService: NavbarService,private applicationService: ApplicationService) { }
+  totalApplications: number = 0;
+  rejectedCount: number = 0;
+  approvedCount: number = 0;
+
 
   ngOnInit(): void {
     this.navbarService.setShowNavbar(false); // Masquer la barre de navigation
@@ -22,6 +26,9 @@ export class ListApplicationsComponent {
       applications => {
         this.applications = applications;
         console.log(applications);
+        this.totalApplications = applications.length;
+        this.rejectedCount = this.applications.filter(app => app.status === 'REJECTED').length;
+        this.approvedCount = this.applications.filter(app => app.status === 'APPROVED').length;
       },
       error => {
         console.error('Error fetching applications:', error);
@@ -51,4 +58,8 @@ export class ListApplicationsComponent {
       }
     );
   }
+  // calculateCounts(): void {
+  //   this.rejectedApplicationsCount = this.applications.filter(app => app.status === 'REJECTED').length;
+  //   this.approvedApplicationsCount = this.applications.filter(app => app.status === 'APPROVED').length;
+  // }
 }

@@ -24,13 +24,53 @@
                     <!-- <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3> -->
                     <div class="student-list-header d-flex justify-content-between align-items-center py-2">
                         <div class="fw-bold fs-4 mb-3">Admin Dashboard</div>
+                        <!-- <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Dashboard</h4>
+                    
+                                </div>
+                            </div>
+                        </div> -->
+                     
+
                         <div class="btn-add d-flex gap-3 align-items-center">
                             <div class="short">
                                 <a class="btn add" href=""><i class="lni lni-plus"></i>Add Application</a>
                             </div>
                         </div>
                     </div>
-                   
+                    <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+                        <div class="col">
+                          <div class="card h-100">
+                            <div class="card-body">
+                              <h5 class="card-title">Application</h5>
+                              <p class="card-text">Total Applications: {{ totalApplications }}</p>
+                            </div>
+                    
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="card h-100">
+                            <div class="card-body">
+                              <h5 class="card-title">Rejected</h5>
+                              <p class="card-text">Total Applications Rejected: {{ rejectedCount }} </p>
+                    
+                            </div>
+                    
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="card h-100">
+                            <div class="card-body">
+                              <h5 class="card-title">Approved</h5>
+                    
+                              <p class="card-text">Total Applications Approved: {{ approvedCount }}</p>
+                            </div>
+                    
+                          </div>
+                        </div>
+                    </div>
                     
                     <h3 class="fw-bold fs-4 my-3">Regitrations/Applications
                     </h3>
