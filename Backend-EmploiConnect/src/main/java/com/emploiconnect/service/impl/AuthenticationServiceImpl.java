@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,18 +35,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         List<User> users = userRepository.findAll();
         List<String> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
-        if (authorities.contains("VIEW_USERS"))
+        //if (authorities.contains("VIEW_USERS"))
             return users.stream()
                     .map(this::mapUserToAuthenticationResponse)
                     .collect(Collectors.toList());
-        else return null;
+        //else return null;
 
 
     }
     private AuthenticationResponse mapUserToAuthenticationResponse(User user) {
         AuthenticationResponse response = new AuthenticationResponse();
-        response.setUserName(user.getUsername());
-
+        response.setFirstName(user.getFirstName());
+        response.setFamilyName(user.getFamilyName());
         response.setEmail(user.getEmail());
         response.setRole(user.getRole());
         return response;
@@ -53,7 +54,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .userName(request.getUserName())
+                .firstName(request.getFirstName())
+                .familyName(request.getFamilyName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(roleService.findDefaultRole().orElse(null))
@@ -61,7 +63,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken)
-                .userName(user.getUsername())
+                .firstName(request.getFirstName())
+                .familyName(request.getFamilyName())
+                .email(user.getEmail())
                 .build();
     }
 
@@ -74,9 +78,38 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .userName(user.getUsername())
+                .firstName(user.getFirstName())
+                .familyName(user.getFamilyName())
                 .email(user.getEmail())
                 .role(user.getRole())
                 .build();
+    }
+    @Override
+    public List<AuthenticationResponse> getCandidateUsers() {
+        List<User> candidateUsers = userRepository.findByRoleName("CANDIDATE");
+       return candidateUsers.stream()
+                .map(user -> {
+                    AuthenticationResponse response = new AuthenticationResponse();
+                    response.setFirstName(user.getFirstName());
+                    response.setFamilyName(user.getFamilyName());
+                    response.setEmail(user.getEmail());
+                    response.setRole(user.getRole());
+                    return response;
+                })
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<AuthenticationResponse> getRecruiterUsers() {
+        List<User> recruiterUsers = userRepository.findByRoleName("RECRUITER");
+        return recruiterUsers.stream()
+                .map(user -> {
+                    AuthenticationResponse response = new AuthenticationResponse();
+                    response.setFirstName(user.getFirstName());
+                    response.setFamilyName(user.getFamilyName());
+                    response.setEmail(user.getEmail());
+                    response.setRole(user.getRole());
+                    return response;
+                })
+                .collect(Collectors.toList());
     }
 }

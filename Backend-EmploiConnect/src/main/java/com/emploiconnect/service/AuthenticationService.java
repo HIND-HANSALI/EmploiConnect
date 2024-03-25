@@ -12,5 +12,8 @@ import java.util.List;
 public interface AuthenticationService {
     AuthenticationResponse register(RegisterRequest user);
     List<AuthenticationResponse> getAllUsers();
+
+    List<AuthenticationResponse> getCandidateUsers();
+    public List<AuthenticationResponse> getRecruiterUsers();
     AuthenticationResponse authenticate(AuthenticationRequest user);
 }

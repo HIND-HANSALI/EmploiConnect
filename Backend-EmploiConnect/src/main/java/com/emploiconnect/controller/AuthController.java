@@ -34,4 +34,15 @@ public class AuthController {
     public ResponseEntity<String> test(){
         return ResponseEntity.ok("test");
     }
+
+    @GetMapping("/candidates")
+    public ResponseEntity<List<AuthenticationResponse>> getCandidateUsers() {
+        List<AuthenticationResponse> candidateUsers = authenticationService.getCandidateUsers();
+        return ResponseEntity.ok(candidateUsers);
+    }
+    @GetMapping("/recruiters")
+    public ResponseEntity<List<AuthenticationResponse>> getRecruiterUsers() {
+        List<AuthenticationResponse> recruiterUsers = authenticationService.getRecruiterUsers();
+        return ResponseEntity.ok(recruiterUsers);
+    }
 }
