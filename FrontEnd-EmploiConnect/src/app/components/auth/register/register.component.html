@@ -17,7 +17,10 @@
                             <p class="text-muted mb-4">Create your account </p>
                             <form (ngSubmit)="onSubmit()">
                                 <div class="form-group mb-3">
-                                    <input [(ngModel)]="userName" name="userName" type="text" placeholder="User Name" required class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="first Name" required class="form-control rounded-pill border-0 shadow-sm px-4">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input [(ngModel)]="familyName" name="familyName" type="text" placeholder="family Name" required class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                
                                 <div class="form-group mb-3">

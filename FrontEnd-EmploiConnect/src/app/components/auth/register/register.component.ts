@@ -11,14 +11,16 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class RegisterComponent {
   email: string= '';
   password: string= '';
-  userName: string= '';
+  firstName: string= '';
+  familyName: string= '';
 
   constructor(private authService: AuthService, private route: Router) { }
 
 
   onSubmit() {
     const registerDto: RegisterDto = {
-      userName:this.userName,
+      firstName:this.firstName,
+      familyName:this.familyName,
       email : this.email,
       password : this.password,
     }

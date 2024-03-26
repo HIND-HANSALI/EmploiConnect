@@ -11,6 +11,8 @@ import { OfferService } from 'src/app/services/offer/offer.service';
 })
 export class ListOffersAdminComponent {
   offers: OfferResponseDTO[]= [];
+
+
   constructor(private navbarService: NavbarService,private offerService: OfferService,private router: Router) { }
 
   ngOnInit(): void {

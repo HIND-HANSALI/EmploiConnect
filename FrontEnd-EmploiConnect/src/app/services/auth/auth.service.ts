@@ -47,4 +47,11 @@ export class AuthService {
          }),
       );
   }
+
+  getCandidateUsers(): Observable<AuthenticationResponseDTO[]> {
+    return this.http.get<AuthenticationResponseDTO[]>(`${environment.apiUrl}/auth/candidates`);
+  }
+  getRecruiterUsers(): Observable<AuthenticationResponseDTO[]> {
+    return this.http.get<AuthenticationResponseDTO[]>(`${environment.apiUrl}/auth/recruiters`);
+  }
 }
