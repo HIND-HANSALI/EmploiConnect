@@ -4,24 +4,24 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 @Component({
-  selector: 'app-list-candidats',
-  templateUrl: './list-candidats.component.html',
-  styleUrls: ['./list-candidats.component.css']
+  selector: 'app-list-recruiters',
+  templateUrl: './list-recruiters.component.html',
+  styleUrls: ['./list-recruiters.component.css']
 })
-export class ListCandidatsComponent {
-  candidateUsers: AuthenticationResponseDTO[] = [];
- 
+export class ListRecruitersComponent {
+  recruiterUsers: AuthenticationResponseDTO[] = [];
 
   constructor(private navbarService: NavbarService,private authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarService.setShowNavbar(false); // Masquer la barre de navigation
-    this.loadCandidateUsers();
+    this.loadRecruiterUsers();
   }
-  loadCandidateUsers(): void {
-    this.authService.getCandidateUsers().subscribe(
+  
+  loadRecruiterUsers(): void {
+    this.authService.getRecruiterUsers().subscribe(
       users => {
-        this.candidateUsers = users;
+        this.recruiterUsers = users;
         console.log(users);
       },
       error => {
@@ -29,5 +29,4 @@ export class ListCandidatsComponent {
       }
     );
   }
-
 }
