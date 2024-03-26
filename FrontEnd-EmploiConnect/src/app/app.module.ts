@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptors/jwt/jwt.interceptor';
 import { ListCandidatsComponent } from './components/candidat/list-candidats/list-candidats.component';
 import { ListOffersAdminComponent } from './components/offer/list-offers-admin/list-offers-admin.component';
+import { ListRecruitersComponent } from './components/recruiter/list-recruiters/list-recruiters.component';
+import { ListStatisticsComponent } from './components/dashboard/list-statistics/list-statistics.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ListOffersAdminComponent } from './components/offer/list-offers-admin/l
     ListApplicationsComponent,
     RegisterAppliactionComponent,
     ListCandidatsComponent,
-    ListOffersAdminComponent
+    ListOffersAdminComponent,
+    ListRecruitersComponent,
+    ListStatisticsComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,8 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import { ListCandidatsComponent } from './components/candidat/list-candidats/list-candidats.component';
 import { ListOffersAdminComponent } from './components/offer/list-offers-admin/list-offers-admin.component';
 import { CreateOfferComponent } from './components/offer/create-offer/create-offer.component';
+import { ListRecruitersComponent } from './components/recruiter/list-recruiters/list-recruiters.component';
+import { ListStatisticsComponent } from './components/dashboard/list-statistics/list-statistics.component';
 
 const routes: Routes = [
   {path:'dashboard/applications',component:ListApplicationsComponent},
@@ -19,8 +21,9 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'offers',component: ListOffersComponent},
   {path:'sidebar',component:SidebarComponent},
-
-  {path:'dashboard/candidats',component:ListCandidatsComponent},
+  {path:'dashboard/recruiters',component:ListRecruitersComponent},
+  {path:'dashboard/statistics',component:ListStatisticsComponent},
+  {path:'dashboard/candidates',component:ListCandidatsComponent},
   {path:'dashboard/offers',component:ListOffersAdminComponent},
   {path:'dashboard/create-offer',component:CreateOfferComponent},
   { path: 'dashboard/edit-offer/:id', component: CreateOfferComponent },

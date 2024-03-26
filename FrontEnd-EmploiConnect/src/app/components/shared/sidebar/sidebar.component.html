@@ -10,9 +10,9 @@
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a routerLink="/dashboard/candidats" class="sidebar-link">
-                    <i class="lni lni-user"></i>
-                    <span>Profile</span>
+                <a routerLink="/dashboard/statistics" class="sidebar-link">
+                    <i class="lni lni-dashboard"></i>
+                    <span>Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -30,15 +30,15 @@
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                    <i class="lni lni-protection"></i>
-                    <span>Auth</span>
+                    <i class="lni lni-users"></i>
+                    <span>Profile</span>
                 </a>
                 <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Login</a>
+                        <a  routerLink="/dashboard/candidates" class="sidebar-link">Candidat</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Register</a>
+                        <a routerLink="/dashboard/recruiters" class="sidebar-link">Recruiter</a>
                     </li>
                 </ul>
             </li>
