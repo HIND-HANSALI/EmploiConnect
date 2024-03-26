@@ -1,0 +1,24 @@
+section {
+    padding: 70px 0;
+    overflow: hidden;
+  }
+  .bg-image {
+    background-image: url('https://img.freepik.com/premium-photo/keyboard-coffee-smartphone-notebook-color-background-top-view_1286-776.jpg');
+    background-size: cover;
+    background-position: center center;
+  }
+  .applynow,
+  .applynow:focus {
+    background: #2487ce;
+    padding: 8px 20px;
+    margin-left: 30px;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+  }
+  
+  .applynow:hover,
+  .applynow:focus:hover {
+    color: #fff;
+    background: #3194db;
+  }

@@ -1,1 +1,96 @@
-<p>list-applications works!</p>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <div class="main">
+        <nav class="navbar navbar-expand px-4 py-3">
+            <form action="#" class="d-none d-sm-inline-block">
+
+            </form> 
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="/account.png" class="avatar img-fluid" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end rounded">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+       <main class="content px-3 py-4">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <!-- <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3> -->
+                    <div class="student-list-header d-flex justify-content-between align-items-center py-2">
+                        <div class="fw-bold fs-4 mb-3">Admin Dashboard</div>
+                        <div class="btn-add d-flex gap-3 align-items-center">
+                            <div class="short">
+                                <a class="btn add" href=""><i class="lni lni-plus"></i>Add Application</a>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+                    <h3 class="fw-bold fs-4 my-3">Regitrations/Applications
+                    </h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="highlight">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Poste</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Type Contrat</th>
+                                        <th>status</th>
+                                        <th>Cv</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  *ngFor="let application of applications">
+                                        <th scope="row">{{ application.id }}</th>
+                                        <td>{{ application.title }}</td>
+                                        <td>{{ application.user.email }}</td>
+                                        <td>{{application.offer.contrat}}</td>
+                                        <td>{{ application.status }}</td>
+                                        <td>{{ application.cv}}</td>
+                                        <td class=" ">
+                                            <a href=""><i class="lni lni-checkmark-circle fw-bold fs-5 mx-5 text-success"></i></a> 
+                                            <a href=""><i class="lni lni-ban text-danger fw-bold fs-5"></i></a> 
+                                          </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-body-secondary">
+                    <div class="col-6 text-start ">
+                        <a class="text-body-secondary" href=" #">
+                            <strong>Hind</strong>
+                        </a>
+                    </div>
+                    <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Contact</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">About Us</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Terms & Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

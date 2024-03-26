@@ -1,1 +1,77 @@
-<p>register-appliaction works!</p>
+<section class="vh-100 bg-image">
+    <!-- The image half -->
+    <!-- <div class="col-md-6 d-none d-md-flex"></div> -->
+    
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-9">
+  
+          <h1 class="text-white mb-4">Apply for a job</h1>
+          <p>Please fill out the form below to apply for the job position.</p>
+  
+          <div class="card" style="border-radius: 15px;">
+
+        <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+  
+              <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Quelle position demandez-vous?</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input type="text" class="form-control form-control-lg" id="title" formControlName="title" />
+                  <div *ngIf="applicationForm.get('title')?.invalid && applicationForm.get('title')?.touched" class="invalid-feedback">
+                    Position is required
+                  </div>
+                </div>
+              </div>
+  
+              <hr class="mx-n3">
+  
+              <div class="row align-items-center py-3">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Quelle est votre situation d'emploi actuelle?</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input type="text" class="form-control form-control-lg" placeholder="Profile description" id="profile" formControlName="profile"/>
+  
+                </div>
+              </div>
+  
+              <hr class="mx-n3">
+  
+              <div class="row align-items-center py-3">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Upload CV</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input class="form-control form-control-lg" type="file"  id="cv" formControlName="cv"/>
+                  <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file. Max file
+                    size 50 MB</div>
+  
+                </div>
+              </div>
+  
+              <hr class="mx-n3">
+  
+              <div class="px-5 py-4">
+                <button type="submit" class="applynow">Send application</button>
+              </div>
+  
+            </div>
+        </form>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
