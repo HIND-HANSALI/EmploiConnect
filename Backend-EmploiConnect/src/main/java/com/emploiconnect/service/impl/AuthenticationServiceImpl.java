@@ -8,6 +8,7 @@ import com.emploiconnect.entity.User;
 import com.emploiconnect.repository.UserRepository;
 import com.emploiconnect.service.AuthenticationService;
 
+import com.emploiconnect.service.CompanyService;
 import com.emploiconnect.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final RoleService roleService;
+    private final CompanyService companyService;
 
     @Override
     public List<AuthenticationResponse> getAllUsers() {
@@ -59,6 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(roleService.findDefaultRole().orElse(null))
+                .company(companyService.findDefaultCompany().orElse(null))
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -66,6 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .firstName(request.getFirstName())
                 .familyName(request.getFamilyName())
                 .email(user.getEmail())
+                .company(user.getCompany())
                 .build();
     }
 

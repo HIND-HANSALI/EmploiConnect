@@ -1,4 +1,5 @@
 package com.emploiconnect.dto.response;
+import com.emploiconnect.entity.Company;
 import com.emploiconnect.entity.Role;
 import lombok.*;
 
@@ -13,4 +14,5 @@ public class AuthenticationResponse {
     private String token;
     private String email;
     private Role role;
+    private Company company;
 }

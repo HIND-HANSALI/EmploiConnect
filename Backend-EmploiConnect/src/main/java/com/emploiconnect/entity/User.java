@@ -42,6 +42,10 @@ public class User implements UserDetails {
     @ManyToOne
     private Role role;
 
+    @ManyToOne
+    private Company company;
+
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Application> applications;
 
