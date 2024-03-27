@@ -1,5 +1,6 @@
 package com.emploiconnect.dto.response;
 
+import com.emploiconnect.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -32,4 +33,6 @@ public class OfferResponseDto {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date updatedAt;
+
+    private AuthenticationResponse creator;
 }

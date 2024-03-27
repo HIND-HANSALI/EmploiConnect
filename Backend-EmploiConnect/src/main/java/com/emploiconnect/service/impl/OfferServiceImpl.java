@@ -3,11 +3,15 @@ package com.emploiconnect.service.impl;
 import com.emploiconnect.dto.request.OfferRequestDto;
 import com.emploiconnect.dto.response.OfferResponseDto;
 import com.emploiconnect.entity.Offer;
+import com.emploiconnect.entity.User;
 import com.emploiconnect.handler.exception.ResourceNotFoundException;
 import com.emploiconnect.repository.OfferRepository;
+import com.emploiconnect.repository.UserRepository;
 import com.emploiconnect.service.OfferService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,12 +22,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Override
     public OfferResponseDto createOffer(OfferRequestDto offerDto) {
+        //Retrieve the Authentication object
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Extract the email or username of the authenticated user
+        String userEmail = authentication.getName();
+        User authenticatedUser = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found for email: " + userEmail));
+
         // Map the OfferRequestDto to the Offer entity
         Offer offer = modelMapper.map(offerDto, Offer.class);
+
+        offer.setCreator(authenticatedUser);
 
         // Save the Offer entity to the database
         Offer savedOffer = offerRepository.save(offer);
@@ -55,21 +70,30 @@ public class OfferServiceImpl implements OfferService {
 
 
     @Override
-    public OfferResponseDto updateOffer(OfferRequestDto offreDto,Long id){
+    public OfferResponseDto updateOffer(OfferRequestDto offerDto,Long id){
 
         // Retrieve the existing offer from the database based on its ID
         Offer existingOffer = offerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + id));
 
         // Update the fields of the existing offer with the data from the OfferRequestDto
-        /*modelMapper.map(offreDto, existingOffer);
+        /*modelMapper.map(offerDto, existingOffer);
         existingOffer.setUpdatedAt(new Date());*/
 
         // Update the fields of the existing offer with the data from the OfferRequestDto
-        existingOffer.setTitle(offreDto.getTitle());
-        existingOffer.setDescription(offreDto.getDescription());
-        existingOffer.setContrat(offreDto.getContrat());
+        existingOffer.setTitle(offerDto.getTitle());
+        existingOffer.setDescription(offerDto.getDescription());
+        existingOffer.setContrat(offerDto.getContrat());
         existingOffer.setUpdatedAt(new Date());
+
+        // Retrieve the Authentication object
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String userEmail = authentication.getName();
+        User authenticatedUser = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found for email: " + userEmail));
+
+        existingOffer.setCreator(authenticatedUser);
 
         // Save the updated offer back to the database
         Offer updatedOffer = offerRepository.save(existingOffer);

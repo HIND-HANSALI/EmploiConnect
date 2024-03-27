@@ -36,8 +36,10 @@ public class Offer {
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL)
     private List<Application> applications;
 
-   /* @Enumerated
-    private OffreStatus status;
-    */
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User creator;
+
+
 
 }

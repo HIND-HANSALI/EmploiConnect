@@ -46,6 +46,9 @@ public class User implements UserDetails {
     private Company company;
 
 
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private List<Offer> createdOffers;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Application> applications;
 
