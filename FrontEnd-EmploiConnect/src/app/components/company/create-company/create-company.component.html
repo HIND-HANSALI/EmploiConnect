@@ -1,0 +1,91 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+
+    <div class="main">
+        <nav class="navbar navbar-expand px-4 py-3">
+            <form action="#" class="d-none d-sm-inline-block">
+
+            </form>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="/account.png" class="avatar img-fluid" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end rounded">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="content px-3 py-4">
+
+                    <div class="d-flex justify-content-center ">
+
+                        <form class="bg-white w-75 rounded-4 shadow p-3" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+                            <h5 class=" px-3 mb-3 text-center">{{ formTitle }}</h5>
+                            
+                            <div class="mb-3  px-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control  border-3" id="name" name="name" formControlName="name"required>
+                            </div>
+                            <div class="d-flex w-100">
+                                <div class="mb-3 px-3 w-50">
+                                    <label for="foundationDate" class="form-label">Foundation Date</label>
+                                    <input type="date" class="form-control border-3" id="foundationDate" name="foundationDate" formControlName="foundationDate" required>
+                                  </div>
+                                  <div class="mb-3 w-50 px-3">
+                                    <label for="location" class="form-label">Location</label>
+                                    <input type="text" class="form-control  border-3"  id="location" name="location" formControlName="location" required>
+                                  </div>
+                            </div>
+
+                            <div class="mb-3 px-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" formControlName="description" required></textarea>
+                              </div>
+                          
+                              <div class="d-flex w-100">
+                                <div class="mb-3 w-50 px-3">
+                                    <label for="sector" class="form-label">Sector</label>
+                                    <input type="text" class="form-control border-3" id="sector" name="sector" formControlName="sector" required>
+                                  </div>
+                                  <div class="mb-3 w-50 px-3">
+                                    <label for="specializations" class="form-label">Specializations</label>
+                                    <input type="text" class="form-control border-3" id="specializations" name="specializations" formControlName="specializations" required>
+                                  </div>
+                            </div>
+          
+                            <div class="d-flex justify-content-center ">
+                                <button type="submit" class="btn shadow shadow  mb-5 rounded add">{{ submitButtonText }}</button>
+                            </div>
+                        </form>
+                    </div>
+        </main>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-body-secondary">
+                    <div class="col-6 text-start ">
+                        <a class="text-body-secondary" href=" #">
+                            <strong>Hind</strong>
+                        </a>
+                    </div>
+                    <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Contact</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">About Us</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Terms & Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

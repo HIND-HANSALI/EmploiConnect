@@ -12,6 +12,8 @@ import { ListOffersAdminComponent } from './components/offer/list-offers-admin/l
 import { CreateOfferComponent } from './components/offer/create-offer/create-offer.component';
 import { ListRecruitersComponent } from './components/recruiter/list-recruiters/list-recruiters.component';
 import { ListStatisticsComponent } from './components/dashboard/list-statistics/list-statistics.component';
+import { ListCompaniesAdminComponent } from './components/company/list-companies-admin/list-companies-admin.component';
+import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
 
 const routes: Routes = [
   {path:'dashboard/applications',component:ListApplicationsComponent},
@@ -25,6 +27,9 @@ const routes: Routes = [
   {path:'dashboard/statistics',component:ListStatisticsComponent},
   {path:'dashboard/candidates',component:ListCandidatsComponent},
   {path:'dashboard/offers',component:ListOffersAdminComponent},
+  {path:'dashboard/companies',component:ListCompaniesAdminComponent},
+  {path:'dashboard/create-company',component:CreateCompanyComponent},
+  { path: 'dashboard/edit-company/:id', component: CreateCompanyComponent},
   {path:'dashboard/create-offer',component:CreateOfferComponent},
   { path: 'dashboard/edit-offer/:id', component: CreateOfferComponent },
 

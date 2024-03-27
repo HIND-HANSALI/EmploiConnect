@@ -18,6 +18,8 @@ import { ListCandidatsComponent } from './components/candidat/list-candidats/lis
 import { ListOffersAdminComponent } from './components/offer/list-offers-admin/list-offers-admin.component';
 import { ListRecruitersComponent } from './components/recruiter/list-recruiters/list-recruiters.component';
 import { ListStatisticsComponent } from './components/dashboard/list-statistics/list-statistics.component';
+import { ListCompaniesAdminComponent } from './components/company/list-companies-admin/list-companies-admin.component';
+import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { ListStatisticsComponent } from './components/dashboard/list-statistics/
     ListCandidatsComponent,
     ListOffersAdminComponent,
     ListRecruitersComponent,
-    ListStatisticsComponent
+    ListStatisticsComponent,
+    ListCompaniesAdminComponent,
+    CreateCompanyComponent
   ],
   imports: [
     BrowserModule,
