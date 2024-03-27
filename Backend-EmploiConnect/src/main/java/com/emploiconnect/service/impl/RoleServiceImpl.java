@@ -1,8 +1,16 @@
 package com.emploiconnect.service.impl;
 
+import com.emploiconnect.configuration.JwtService;
+import com.emploiconnect.dto.request.UpdateUserRoleRequest;
+import com.emploiconnect.dto.response.AuthenticationResponse;
 import com.emploiconnect.entity.Authority;
+import com.emploiconnect.entity.Company;
 import com.emploiconnect.entity.Role;
+import com.emploiconnect.entity.User;
+import com.emploiconnect.handler.exception.ResourceNotFoundException;
+import com.emploiconnect.repository.CompanyRepository;
 import com.emploiconnect.repository.RoleRepository;
+import com.emploiconnect.repository.UserRepository;
 import com.emploiconnect.service.AuthorityService;
 import com.emploiconnect.service.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +30,9 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
     private final AuthorityService authorityService;
     private final RoleRepository roleRepository;
+    private  final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
+    private final JwtService jwtService;
     @Override
     public List<Role> getAll(){
         List<String> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
@@ -32,7 +43,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role save(Role role, boolean isSeed) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
@@ -42,14 +53,14 @@ public class RoleServiceImpl implements RoleService {
             if (!authorities.contains("CREATE_ROLE")) {
                 throw new CustomException("Insufficient authorities", HttpStatus.UNAUTHORIZED);
             }
-        }
+        }*/
 
         if (findDefaultRole().isPresent() && role.isDefault()) {
             throw new CustomException("There is already a default role", HttpStatus.UNAUTHORIZED);
         }
-        if (authorities.contains("CREATE_ROLE"))
+        //if (authorities.contains("CREATE_ROLE"))
             return roleRepository.save(role);
-        else return null;
+        //else return null;
 
     }
     @Override
@@ -73,7 +84,32 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
+    @Override
+    public AuthenticationResponse updateUserRole(Long userId, UpdateUserRoleRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
+        Role role = roleRepository.findById(request.getRoleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+
+        Company company = companyRepository.findById(request.getCompanyId())
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
+
+        user.setRole(role);
+        user.setCompany(company);
+
+        userRepository.save(user);
+
+        //String jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                //.token(jwtToken)
+                .firstName(user.getFirstName())
+                .familyName(user.getFamilyName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .company(user.getCompany())
+                .build();
+    }
 
 
 

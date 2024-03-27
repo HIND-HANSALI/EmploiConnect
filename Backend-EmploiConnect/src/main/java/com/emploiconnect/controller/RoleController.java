@@ -3,6 +3,8 @@ package com.emploiconnect.controller;
 import com.emploiconnect.dto.request.GrantAuthoritiesRequestDto;
 import com.emploiconnect.dto.request.GrantRoleToUserRequestDto;
 import com.emploiconnect.dto.request.RoleRequestDTO;
+import com.emploiconnect.dto.request.UpdateUserRoleRequest;
+import com.emploiconnect.dto.response.AuthenticationResponse;
 import com.emploiconnect.dto.response.RoleResponseDTO;
 import com.emploiconnect.entity.Role;
 import com.emploiconnect.service.RoleService;
@@ -33,6 +35,12 @@ public class RoleController {
         Role role = roleService.save(roleToSave.toRole(), false);
         if (role == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
+    }
+    @PutMapping("/{userId}/updateRole")
+    public ResponseEntity<AuthenticationResponse> updateUserRole(@PathVariable Long userId, @RequestBody UpdateUserRoleRequest request) {
+
+        AuthenticationResponse response = roleService.updateUserRole(userId,request);
+        return ResponseEntity.ok().body(response);
     }
 
 

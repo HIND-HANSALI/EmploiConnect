@@ -1,5 +1,7 @@
 package com.emploiconnect.service;
 
+import com.emploiconnect.dto.request.UpdateUserRoleRequest;
+import com.emploiconnect.dto.response.AuthenticationResponse;
 import com.emploiconnect.entity.Role;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +14,7 @@ public interface RoleService {
     Optional<Role> findDefaultRole();
 
     Optional<Role> getById(Long id);
-
+    AuthenticationResponse updateUserRole(Long userId, UpdateUserRoleRequest request);
     void delete(Long id);
 
     Optional<Role> getByName(String name);
