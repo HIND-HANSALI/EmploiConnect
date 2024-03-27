@@ -47,11 +47,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setProfile(applicationRequestDto.getProfile());
         application.setStatus(ApplicationStatus.PENDING);
 
-        // Retrieve the offer from the database based on its ID
-        /*Offer offer = offerRepository.findById(applicationRequestDto.getOfferId())
-                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
-        application.setOffer(offer);*/
-
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
         application.setOffer(offer);
@@ -60,22 +55,15 @@ public class ApplicationServiceImpl implements ApplicationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Extract the email or username of the authenticated user
-        String userEmail = authentication.getName(); // Assuming email is used for authentication
-        String message = "Competitions for current user: " + userEmail;
-        // Step 3: Query the database to find the member by email
+        String userEmail = authentication.getName();
+
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found for email: " + userEmail));
-
-        // Retrieve the user from the database based on its ID
-        /* User user = userRepository.findById(applicationRequestDto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + applicationRequestDto.getUserId()));
-                */
 
         application.setUser(user);
 
         // Check if the user has already applied for the offer
-        boolean isUserApplied = applicationRepository.existsByUserIdAndOfferId(
-                applicationRequestDto.getUserId(), applicationRequestDto.getOfferId());
+        boolean isUserApplied = applicationRepository.existsByUserIdAndOfferId(user.getId(), offerId);
 
         if (isUserApplied) {
             throw new OperationException("Candidat is already registered for the offer");
