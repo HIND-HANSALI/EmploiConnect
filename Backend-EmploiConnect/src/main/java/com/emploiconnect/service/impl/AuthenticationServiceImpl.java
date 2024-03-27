@@ -4,6 +4,8 @@ import com.emploiconnect.configuration.JwtService;
 import com.emploiconnect.dto.request.AuthenticationRequest;
 import com.emploiconnect.dto.request.RegisterRequest;
 import com.emploiconnect.dto.response.AuthenticationResponse;
+import com.emploiconnect.dto.response.CompanyResponseDto;
+import com.emploiconnect.entity.Company;
 import com.emploiconnect.entity.User;
 import com.emploiconnect.repository.UserRepository;
 import com.emploiconnect.service.AuthenticationService;
@@ -11,6 +13,7 @@ import com.emploiconnect.service.AuthenticationService;
 import com.emploiconnect.service.CompanyService;
 import com.emploiconnect.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final RoleService roleService;
     private final CompanyService companyService;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<AuthenticationResponse> getAllUsers() {
@@ -51,6 +55,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         response.setFamilyName(user.getFamilyName());
         response.setEmail(user.getEmail());
         response.setRole(user.getRole());
+
+        Company company = user.getCompany();
+        if (company != null) {
+            CompanyResponseDto companyDto = modelMapper.map(company, CompanyResponseDto.class);
+            response.setCompany(companyDto);
+        }
         return response;
     }
     @Override
@@ -65,11 +75,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        Company company = user.getCompany();
+        CompanyResponseDto companyDto = modelMapper.map(company, CompanyResponseDto.class);
+        /*Company company = user.getCompany();
+        CompanyResponseDto companyDto = null;
+        if (company != null) {
+            companyDto = CompanyResponseDto.builder()
+                    .id(company.getId())
+                    .name(company.getName())
+                    .sector(company.getSector())
+                    .location(company.getLocation())
+                    .foundationDate(company.getFoundationDate())
+                    .specializations(company.getSpecializations())
+                    .description(company.getDescription())
+                    .build();
+        }*/
         return AuthenticationResponse.builder().token(jwtToken)
                 .firstName(request.getFirstName())
                 .familyName(request.getFamilyName())
                 .email(user.getEmail())
-                .company(user.getCompany())
+                .company(companyDto)
                 .build();
     }
 
@@ -98,6 +123,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     response.setFamilyName(user.getFamilyName());
                     response.setEmail(user.getEmail());
                     response.setRole(user.getRole());
+
+                    Company company = user.getCompany();
+                    if (company != null) {
+                        CompanyResponseDto companyDto = modelMapper.map(company, CompanyResponseDto.class);
+                        response.setCompany(companyDto);
+                    }
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -112,6 +143,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     response.setFamilyName(user.getFamilyName());
                     response.setEmail(user.getEmail());
                     response.setRole(user.getRole());
+
+                    Company company = user.getCompany();
+                    if (company != null) {
+                        CompanyResponseDto companyDto = modelMapper.map(company, CompanyResponseDto.class);
+                        response.setCompany(companyDto);
+                    }
                     return response;
                 })
                 .collect(Collectors.toList());

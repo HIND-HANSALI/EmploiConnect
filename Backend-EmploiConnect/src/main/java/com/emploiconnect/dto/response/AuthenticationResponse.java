@@ -14,5 +14,5 @@ public class AuthenticationResponse {
     private String token;
     private String email;
     private Role role;
-    private Company company;
+    private CompanyResponseDto company;
 }

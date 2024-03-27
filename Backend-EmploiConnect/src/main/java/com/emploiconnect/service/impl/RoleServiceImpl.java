@@ -3,6 +3,7 @@ package com.emploiconnect.service.impl;
 import com.emploiconnect.configuration.JwtService;
 import com.emploiconnect.dto.request.UpdateUserRoleRequest;
 import com.emploiconnect.dto.response.AuthenticationResponse;
+import com.emploiconnect.dto.response.CompanyResponseDto;
 import com.emploiconnect.entity.Authority;
 import com.emploiconnect.entity.Company;
 import com.emploiconnect.entity.Role;
@@ -100,6 +101,19 @@ public class RoleServiceImpl implements RoleService {
 
         userRepository.save(user);
 
+
+        CompanyResponseDto companyDto = null;
+        if (company != null) {
+            companyDto = CompanyResponseDto.builder()
+                    .id(company.getId())
+                    .name(company.getName())
+                    .sector(company.getSector())
+                    .location(company.getLocation())
+                    .foundationDate(company.getFoundationDate())
+                    .specializations(company.getSpecializations())
+                    .description(company.getDescription())
+                    .build();
+        }
         //String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 //.token(jwtToken)
@@ -107,7 +121,7 @@ public class RoleServiceImpl implements RoleService {
                 .familyName(user.getFamilyName())
                 .email(user.getEmail())
                 .role(user.getRole())
-                .company(user.getCompany())
+                .company(companyDto)
                 .build();
     }
 
