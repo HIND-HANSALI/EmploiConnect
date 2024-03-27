@@ -5,6 +5,7 @@ import com.emploiconnect.dto.response.OfferResponseDto;
 import com.emploiconnect.handler.exception.ResourceNotFoundException;
 import com.emploiconnect.handler.response.ResponseMessage;
 import com.emploiconnect.service.OfferService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class OfferController {
         }
     }
     @PostMapping
-    public ResponseEntity<OfferResponseDto> createOffer(@RequestBody OfferRequestDto offerRequestDto) {
+    public ResponseEntity<OfferResponseDto> createOffer(@Valid @RequestBody OfferRequestDto offerRequestDto) {
         OfferResponseDto createdOffer = offerService.createOffer(offerRequestDto);
 
         if(createdOffer==null){
@@ -52,7 +53,7 @@ public class OfferController {
 
     }
     @PutMapping("/{id}")
-    public ResponseEntity<OfferResponseDto> updateOffer(@RequestBody OfferRequestDto offerRequestDto, @PathVariable Long id) {
+    public ResponseEntity<OfferResponseDto> updateOffer(@Valid @RequestBody OfferRequestDto offerRequestDto, @PathVariable Long id) {
         System.out.println(offerRequestDto);
         OfferResponseDto updatedOffer = offerService.updateOffer(offerRequestDto, id);
         if(updatedOffer==null){
