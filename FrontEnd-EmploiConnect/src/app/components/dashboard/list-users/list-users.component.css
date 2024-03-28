@@ -168,7 +168,7 @@ a.sidebar-link:hover {
     transition: all .2s ease-out;
 }
 
-.navbar {
+/* .navbar {
     background-color: #f5f5f5;
     box-shadow: 0 0 2rem 0 rgba(33, 37, 41, .1);
 }
@@ -180,7 +180,7 @@ a.sidebar-link:hover {
 .avatar {
     height: 40px;
     width: 40px;
-}
+} */
 
 
 

@@ -53,23 +53,20 @@ export class ListUsersComponent {
 
   openModal(user: AuthenticationResponseDTO): void {
     console.log('Selected User:', this.selectedUser);
-    console.log('openModal() function called');
+   
     this.selectedUser = user;
     this.selectedCompany = user.company.id;
     this.selectedRole = user.role.id;
-    console.log("company ",this.selectedCompany);
-    // console.log("hhhhh",this.selectedCompany);
   }
 
   closeModal(): void {
     this.selectedUser = null;
   }
   updateUserRole(): void {
-    // console.log('Selected Company before updating role:', this.selectedCompany);
     if (this.selectedUser && this.selectedRole) {
       const selectedRoleId = Number(this.selectedRole);
       const selectedRole = this.roles.find(role => role.id === selectedRoleId);
-      // console.log('Selected Company ID:', this.selectedCompany);
+     
   
       if (selectedRole) {
         const request : UpdateUserRoleRequestDTO= {
@@ -95,7 +92,7 @@ export class ListUsersComponent {
     }
   
   }
-  
+
   deleteUser(id: number): void {
     this.authService.deleteUser(id)
       .subscribe(() => {

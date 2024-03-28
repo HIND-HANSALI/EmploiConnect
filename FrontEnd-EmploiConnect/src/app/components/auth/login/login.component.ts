@@ -11,7 +11,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent {
   email: string= '';
   password: string= '';
-
   constructor(private authService: AuthService, private route: Router) { }
 
   onSubmit() {
@@ -24,7 +23,9 @@ export class LoginComponent {
         console.log('Login successful!', response);
 
         localStorage.setItem('role', response.role.name);
-
+        localStorage.setItem('firstName', response.firstName);
+        localStorage.setItem('familyName', response.familyName);
+       
         this.route.navigate(["offers"])
       },
       (error) => {

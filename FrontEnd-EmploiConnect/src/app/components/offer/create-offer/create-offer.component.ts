@@ -11,7 +11,6 @@ import { OfferService } from 'src/app/services/offer/offer.service';
   styleUrls: ['./create-offer.component.css']
 })
 export class CreateOfferComponent  implements OnInit{
-  // @Output() offerAdded: EventEmitter<OfferRequestDTO> = new EventEmitter<OfferRequestDTO>();
   @Input() offerToUpdate: OfferRequestDTO | null = null;
   offerForm: FormGroup;
 
@@ -40,7 +39,6 @@ export class CreateOfferComponent  implements OnInit{
         });
       });
     }else {
-      // Creating new offer
       this.isEditMode = false;
       this.offerForm.reset();
     }
@@ -83,15 +81,6 @@ export class CreateOfferComponent  implements OnInit{
     });
   }
  
-
-  // onSubmit() {
-  //   if (this.offerForm.valid) {
-  //     const offerToAdd: OfferRequestDTO = {
-  //       title: this.offerForm.value.title,
-  //       description: this.offerForm.value.description,
-  //       contrat: this.offerForm.value.contrat,
-  //       createdAt: new Date()
-  //     };
      
 
 }
