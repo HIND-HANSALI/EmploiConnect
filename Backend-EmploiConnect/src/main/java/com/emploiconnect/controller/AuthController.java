@@ -45,4 +45,10 @@ public class AuthController {
         List<AuthenticationResponse> recruiterUsers = authenticationService.getRecruiterUsers();
         return ResponseEntity.ok(recruiterUsers);
     }
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+
+        authenticationService.deleteUser(id);
+
+    }
 }

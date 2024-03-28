@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-
+    private Long id;
     private String firstName;
     private String familyName;
     private String token;

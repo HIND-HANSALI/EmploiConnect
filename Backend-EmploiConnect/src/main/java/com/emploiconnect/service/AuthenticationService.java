@@ -16,4 +16,5 @@ public interface AuthenticationService {
     List<AuthenticationResponse> getCandidateUsers();
     public List<AuthenticationResponse> getRecruiterUsers();
     AuthenticationResponse authenticate(AuthenticationRequest user);
+    void deleteUser(Long id);
 }

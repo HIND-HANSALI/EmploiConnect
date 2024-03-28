@@ -7,6 +7,7 @@ import com.emploiconnect.dto.response.AuthenticationResponse;
 import com.emploiconnect.dto.response.CompanyResponseDto;
 import com.emploiconnect.entity.Company;
 import com.emploiconnect.entity.User;
+import com.emploiconnect.handler.exception.ResourceNotFoundException;
 import com.emploiconnect.repository.UserRepository;
 import com.emploiconnect.service.AuthenticationService;
 
@@ -51,6 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     private AuthenticationResponse mapUserToAuthenticationResponse(User user) {
         AuthenticationResponse response = new AuthenticationResponse();
+        response.setId(user.getId());
         response.setFirstName(user.getFirstName());
         response.setFamilyName(user.getFamilyName());
         response.setEmail(user.getEmail());
@@ -153,4 +155,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 })
                 .collect(Collectors.toList());
     }
+            @Override
+            public void deleteUser(Long id){
+                User existingUser = userRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+                userRepository.delete(existingUser);
+            }
 }
