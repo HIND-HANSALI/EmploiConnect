@@ -22,13 +22,13 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a routerLink="/dashboard/companies" class="sidebar-link">
+                <a routerLink="/dashboard/companies" class="sidebar-link" *ngIf="hasAuthorityManager()">
                     <i class="lni lni-briefcase-alt"></i>
                     <span>Company</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a routerLink="/dashboard/applications" class="sidebar-link">
+                <a routerLink="/dashboard/applications"  class="sidebar-link">
                     <i class="lni lni-telegram"></i>
                     <span>Applications</span>
                 </a>
@@ -41,13 +41,13 @@
                 </a>
                 <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a routerLink="/dashboard/users" class="sidebar-link">All Users</a>
+                        <a routerLink="/dashboard/users" *ngIf="hasAuthorityManager()" class="sidebar-link">All Users</a>
                     </li>
                     <li class="sidebar-item">
                         <a  routerLink="/dashboard/candidates" class="sidebar-link">Candidat</a>
                     </li>
                     <li class="sidebar-item">
-                        <a routerLink="/dashboard/recruiters" class="sidebar-link">Recruiter</a>
+                        <a routerLink="/dashboard/recruiters" *ngIf="hasAuthorityManager()" class="sidebar-link">Recruiter</a>
                     </li>
                 </ul>
             </li>

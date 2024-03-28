@@ -6,13 +6,16 @@
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-9">
   
-          <h1 class="text-white mb-4">Apply for a job</h1>
+          <h1 class="text-white mb-2">Apply for a job</h1>
           <p>Please fill out the form below to apply for the job position.</p>
   
           <div class="card" style="border-radius: 15px;">
 
         <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
             <div class="card-body">
+              <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessage }}
+              </div>
   
               <div class="row align-items-center pt-4 pb-3">
                 <div class="col-md-3 ps-5">
@@ -63,7 +66,7 @@
   
               <hr class="mx-n3">
   
-              <div class="px-5 py-4">
+              <div class="px-5 py-3">
                 <button type="submit" class="applynow">Send application</button>
               </div>
   

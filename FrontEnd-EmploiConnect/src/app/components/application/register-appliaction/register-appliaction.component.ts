@@ -13,6 +13,8 @@ export class RegisterAppliactionComponent implements OnInit {
   applicationForm: FormGroup;
   offerId: number=0;
 
+  errorMessage: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -46,12 +48,12 @@ console.log(formData);
     this.applicationService.saveApplication(formData,this.offerId).subscribe(
       (response) => {
         console.log('Application saved successfully:', response);
-        // Optionally, reset the form
+        
         this.applicationForm.reset();
       },
       (error) => {
         console.error('Error saving application:', error);
-        // Handle error display or logging here
+        this.errorMessage = error.error.message;
       }
     );
   }

@@ -19,6 +19,27 @@ export class SidebarComponent {
       }
     });
   }
+  hasAuthority(): boolean {
+
+    const role = localStorage.getItem('role');
+
+    return this.isLoggedIn() && (role === 'RECRUITER' || role === 'SUPER_ADMIN');
+  }
+
+  hasAuthorityManager(): boolean {
+
+    const role = localStorage.getItem('role');
+
+    return this.isLoggedIn() && (role === 'SUPER_ADMIN');
+  }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
+  }
+
+  isLoggedOut(): boolean{
+    return localStorage.getItem('token') == null;
+  }
 
   
   Logout(): void {

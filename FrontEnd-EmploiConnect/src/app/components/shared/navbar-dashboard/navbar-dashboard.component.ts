@@ -14,11 +14,18 @@ export class NavbarDashboardComponent {
     this.familyName = localStorage.getItem('familyName');
 
   }
-  hasAuthorityMember(): boolean {
+  hasAuthority(): boolean {
 
     const role = localStorage.getItem('role');
 
-    return this.isLoggedIn() && (role === 'ROLE_MEMBER');
+    return this.isLoggedIn() && (role === 'RECRUITER' || role === 'SUPER_ADMIN');
+  }
+
+  hasAuthorityManager(): boolean {
+
+    const role = localStorage.getItem('role');
+
+    return this.isLoggedIn() && (role === 'ROLE_MANAGER');
   }
 
   isLoggedIn(): boolean {

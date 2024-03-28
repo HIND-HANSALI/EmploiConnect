@@ -10,7 +10,7 @@
                       
                         <div class="btn-add d-flex gap-3 align-items-center">
                             <div class="short">
-                                <a class="btn add" href=""><i class="lni lni-plus"></i>Add Application</a>
+                                <a class="btn add" *ngIf="hasAuthorityManager()"  href=""><i class="lni lni-plus"></i>Add Application</a>
                             </div>
                         </div>
                     </div>

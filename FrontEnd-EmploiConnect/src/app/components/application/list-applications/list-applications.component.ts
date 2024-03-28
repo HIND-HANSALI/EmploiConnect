@@ -58,6 +58,15 @@ export class ListApplicationsComponent {
       }
     );
   }
+  hasAuthorityManager(): boolean {
+
+    const role = localStorage.getItem('role');
+
+    return this.isLoggedIn() && (role === 'SUPER_ADMIN');
+  }
+  isLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
+  }
   // calculateCounts(): void {
   //   this.rejectedApplicationsCount = this.applications.filter(app => app.status === 'REJECTED').length;
   //   this.approvedApplicationsCount = this.applications.filter(app => app.status === 'APPROVED').length;
