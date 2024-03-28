@@ -32,6 +32,8 @@ export class NavbarDashboardComponent {
   Logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('familyName');
     this.router.navigate(["login"])
   }
 }

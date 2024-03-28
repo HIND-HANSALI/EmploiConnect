@@ -22,6 +22,7 @@ import { ListCompaniesAdminComponent } from './components/company/list-companies
 import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
 import { ListUsersComponent } from './components/dashboard/list-users/list-users.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarDashboardComponent } from './components/shared/navbar-dashboard/navbar-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     ListStatisticsComponent,
     ListCompaniesAdminComponent,
     CreateCompanyComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    NavbarDashboardComponent
   ],
   imports: [
     BrowserModule,

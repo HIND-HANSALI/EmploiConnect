@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,7 +9,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 export class SidebarComponent {
   @ViewChild('toggleBtn', { static: true }) toggleBtn!: ElementRef;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
     this.toggleBtn.nativeElement.addEventListener('click', () => {
@@ -17,5 +18,14 @@ export class SidebarComponent {
         sidebar.classList.toggle("expand");
       }
     });
+  }
+
+  
+  Logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('familyName');
+    this.router.navigate(["login"])
   }
 }
