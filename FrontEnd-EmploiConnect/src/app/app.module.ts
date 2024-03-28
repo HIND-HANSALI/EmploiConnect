@@ -20,6 +20,8 @@ import { ListRecruitersComponent } from './components/recruiter/list-recruiters/
 import { ListStatisticsComponent } from './components/dashboard/list-statistics/list-statistics.component';
 import { ListCompaniesAdminComponent } from './components/company/list-companies-admin/list-companies-admin.component';
 import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
+import { ListUsersComponent } from './components/dashboard/list-users/list-users.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,14 +40,16 @@ import { CreateCompanyComponent } from './components/company/create-company/crea
     ListRecruitersComponent,
     ListStatisticsComponent,
     ListCompaniesAdminComponent,
-    CreateCompanyComponent
+    CreateCompanyComponent,
+    ListUsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbDropdownModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
