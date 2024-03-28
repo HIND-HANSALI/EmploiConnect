@@ -1,0 +1,148 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <div class="main">
+        <!-- <nav class="navbar navbar-expand px-4 py-3">
+            <form action="#" class="d-none d-sm-inline-block">
+
+            </form>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="assets/images/image.png" class="avatar img-fluid" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end rounded">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav> -->
+        <nav class="navbar navbar-expand px-4 py-3">
+            <form action="#" class="d-none d-sm-inline-block">
+        
+            </form>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a class="nav-link dropdown-toggle" ngbDropdownToggle>
+                            <img src="assets/images/image.png" class="avatar img-fluid" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end rounded" ngbDropdownMenu>
+                            <a class="dropdown-item" href="#">My Profile</a>
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Logout</a>
+                            
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="content px-3 py-4">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3>
+                    <h3 class="fw-bold fs-4 my-3">All Users
+                    </h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="highlight">
+                                        <th scope="col">#</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Update Role Company</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of users">
+                                        <th scope="row"></th>
+                                        <td>{{ user.firstName }}</td>
+                                        <td>{{ user.familyName }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.role.name }}</td>
+                                        <!-- <td>{{ user.company.name }}</td> -->
+                                        <td>
+                                            <ng-container *ngIf="user.role.name !== 'CANDIDATE'; else dash">{{ user.company.name }}</ng-container>
+                                            <ng-template #dash>&mdash;</ng-template>
+                                        </td>
+                                        <td class=" ">
+                                            <a (click)="openModal(user)"><i class="lni lni-pencil-alt mx-5 text-dark"></i></a>
+                                            <button class="btn btn-link p-0 border-0" (click)="deleteUser(user.id)"><i class="lni lni-trash-can text-dark"></i></button>
+                                          </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-body-secondary">
+                    <div class="col-6 text-start ">
+                        <a class="text-body-secondary" href=" #">
+                            <strong>Hind</strong>
+                        </a>
+                    </div>
+                    <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Contact</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">About Us</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="text-body-secondary" href="#">Terms & Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+<!-- Modal Component -->
+<div class="modal"  *ngIf="selectedUser">
+    <div  class=" modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update User Role for {{ selectedUser.firstName }} {{ selectedUser.familyName }}</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body   ">
+                <!-- Form for updating role -->
+                <form  (submit)="updateUserRole()">
+
+                    <div class="d-flex w-75">
+                        <div class="mb-3 px-3 w-50">
+                            <label for="role" class="form-label">Role</label>
+                            <select [(ngModel)]="selectedRole" name="role">
+                                <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 w-50 px-3">
+                            <label for="company" class="form-label">Company</label>
+                            <select [(ngModel)]="selectedCompany" name="company">
+                                <option *ngFor="let company of companies" [value]="company.id">{{ company.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                   
+                    <button class="btn add" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

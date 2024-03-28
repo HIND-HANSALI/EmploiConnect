@@ -1,4 +1,6 @@
 import { Role } from "src/app/models/Role";
+import { CompanyResponseDTO } from "./CompanyResponseDTO";
+import { RoleResponseDTO } from "./RoleResponseDTO";
 
 export interface AuthenticationResponseDTO {
     id:number;
@@ -6,6 +8,6 @@ export interface AuthenticationResponseDTO {
     firstName: string;
     familyName: string;
     email: string;
-    role: Role;
-    
+    role: RoleResponseDTO;
+    company:CompanyResponseDTO
 }
