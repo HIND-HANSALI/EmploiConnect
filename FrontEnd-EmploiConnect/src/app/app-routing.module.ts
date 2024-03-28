@@ -14,6 +14,7 @@ import { ListRecruitersComponent } from './components/recruiter/list-recruiters/
 import { ListStatisticsComponent } from './components/dashboard/list-statistics/list-statistics.component';
 import { ListCompaniesAdminComponent } from './components/company/list-companies-admin/list-companies-admin.component';
 import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
+import { ListUsersComponent } from './components/dashboard/list-users/list-users.component';
 
 const routes: Routes = [
   {path:'dashboard/applications',component:ListApplicationsComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path:'dashboard/recruiters',component:ListRecruitersComponent},
   {path:'dashboard/statistics',component:ListStatisticsComponent},
   {path:'dashboard/candidates',component:ListCandidatsComponent},
+  {path:'dashboard/users',component:ListUsersComponent},
   {path:'dashboard/offers',component:ListOffersAdminComponent},
   {path:'dashboard/companies',component:ListCompaniesAdminComponent},
   {path:'dashboard/create-company',component:CreateCompanyComponent},
