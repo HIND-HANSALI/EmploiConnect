@@ -29,4 +29,10 @@ export class ListRecruitersComponent {
       }
     );
   }
+  deleteUser(id: number): void {
+    this.authService.deleteUser(id)
+      .subscribe(() => {
+        this.recruiterUsers = this.recruiterUsers.filter( user => user.id !== id);
+      });
+  }
 }

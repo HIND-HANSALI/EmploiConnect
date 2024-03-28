@@ -29,5 +29,11 @@ export class ListCandidatsComponent {
       }
     );
   }
+  deleteUser(id: number): void {
+    this.authService.deleteUser(id)
+      .subscribe(() => {
+        this.candidateUsers = this.candidateUsers.filter( user => user.id !== id);
+      });
+  }
 
 }

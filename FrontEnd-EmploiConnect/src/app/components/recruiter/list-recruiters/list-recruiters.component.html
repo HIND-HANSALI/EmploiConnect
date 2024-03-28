@@ -45,7 +45,7 @@
                                         <td>{{ user.role.name }}</td>
                                         <td class=" ">
                                             <a><i class="lni  lni-pencil-alt mx-5 text-dark"></i></a>
-                                            <button class="btn btn-link p-0 border-0"><i class="lni lni-trash-can text-dark"></i></button>
+                                            <button class="btn btn-link p-0 border-0" (click)="deleteUser(user.id)"><i class="lni lni-trash-can text-dark"></i></button>
                                           </td>
                                     </tr>
                                     
