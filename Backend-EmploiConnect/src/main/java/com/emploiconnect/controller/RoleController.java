@@ -12,12 +12,14 @@ import com.emploiconnect.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
 @RequestMapping("/api/v1/role")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
 public class RoleController {
     private final RoleService roleService;
     private final UserService userService;
@@ -36,11 +38,19 @@ public class RoleController {
         if (role == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
     }
+
     @PutMapping("/{userId}/updateRole")
     public ResponseEntity<AuthenticationResponse> updateUserRole(@PathVariable Long userId, @RequestBody UpdateUserRoleRequest request) {
 
         AuthenticationResponse response = roleService.updateUserRole(userId,request);
         return ResponseEntity.ok().body(response);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (roleService.getById(id).isPresent()) {
+            roleService.delete(id);
+            return ResponseEntity.ok().build();
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
@@ -75,12 +85,4 @@ public class RoleController {
 //            return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
 //        }
 //    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (roleService.getById(id).isPresent()) {
-            roleService.delete(id);
-            return ResponseEntity.ok().build();
-        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 }

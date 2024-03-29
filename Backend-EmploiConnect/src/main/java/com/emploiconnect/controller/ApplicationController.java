@@ -6,12 +6,14 @@ import com.emploiconnect.handler.response.ResponseMessage;
 import com.emploiconnect.service.ApplicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/applications")
+@PreAuthorize("hasRole('ROLE_RECRUITER') || hasRole('ROLE_SUPER_ADMIN')")
 public class ApplicationController {
     private final ApplicationService applicationService;
 
