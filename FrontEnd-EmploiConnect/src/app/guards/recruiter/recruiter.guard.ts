@@ -5,7 +5,7 @@ export const recruiterGuard: CanActivateFn = (route, state) => {
   
   const storedRole = localStorage.getItem('role');
 
-  if (storedRole === 'RECRUITER') {
+  if (storedRole === 'RECRUITER'  || storedRole === 'SUPER_ADMIN') {
      return true; 
   } else {
     return false;

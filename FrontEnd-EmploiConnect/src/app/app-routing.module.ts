@@ -15,6 +15,9 @@ import { ListStatisticsComponent } from './components/dashboard/list-statistics/
 import { ListCompaniesAdminComponent } from './components/company/list-companies-admin/list-companies-admin.component';
 import { CreateCompanyComponent } from './components/company/create-company/create-company.component';
 import { ListUsersComponent } from './components/dashboard/list-users/list-users.component';
+import { recruiterGuard } from './guards/recruiter/recruiter.guard';
+import { adminGuard } from './guards/admin/admin.guard';
+import { allRolesGuard } from './guards/allRoles/all-roles.guard';
 
 const routes: Routes = [
   {path:'dashboard/applications',component:ListApplicationsComponent},
@@ -22,21 +25,23 @@ const routes: Routes = [
   {path: '',component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'offers',component: ListOffersComponent},
+  {path: 'offers',component: ListOffersComponent,canActivate: [allRolesGuard]},
   {path:'sidebar',component:SidebarComponent},
-  {path:'dashboard/recruiters',component:ListRecruitersComponent},
-  {path:'dashboard/statistics',component:ListStatisticsComponent},
-  {path:'dashboard/candidates',component:ListCandidatsComponent},
-  {path:'dashboard/users',component:ListUsersComponent},
-  {path:'dashboard/offers',component:ListOffersAdminComponent},
-  {path:'dashboard/companies',component:ListCompaniesAdminComponent},
-  {path:'dashboard/create-company',component:CreateCompanyComponent},
-  { path: 'dashboard/edit-company/:id', component: CreateCompanyComponent},
-  {path:'dashboard/create-offer',component:CreateOfferComponent},
-  { path: 'dashboard/edit-offer/:id', component: CreateOfferComponent },
+  {path:'dashboard/statistics',component:ListStatisticsComponent,canActivate: [recruiterGuard]},
+  {path:'dashboard/candidates',component:ListCandidatsComponent,canActivate: [recruiterGuard]},
+
+  {path:'dashboard/recruiters',component:ListRecruitersComponent,canActivate: [adminGuard]},
+  {path:'dashboard/users',component:ListUsersComponent,canActivate: [adminGuard]},
+  {path:'dashboard/companies',component:ListCompaniesAdminComponent,canActivate: [adminGuard]},
+  {path:'dashboard/create-company',component:CreateCompanyComponent,canActivate: [adminGuard]},
+  { path: 'dashboard/edit-company/:id', component: CreateCompanyComponent,canActivate: [adminGuard]},
+  
+  {path:'dashboard/offers',component:ListOffersAdminComponent,canActivate: [recruiterGuard]},
+  {path:'dashboard/create-offer',component:CreateOfferComponent,canActivate: [recruiterGuard]},
+  { path: 'dashboard/edit-offer/:id', component: CreateOfferComponent,canActivate: [recruiterGuard] },
 
   
-  {path:'applications/register/:id',component:RegisterAppliactionComponent},
+  {path:'applications/register/:id',component:RegisterAppliactionComponent,canActivate: [allRolesGuard]},
 ];
 
 @NgModule({
