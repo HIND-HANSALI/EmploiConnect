@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -15,7 +16,7 @@ public class ApplicationRequestDto {
     @NotNull
     private String title;
     @NotNull
-    private String cv;
+    private MultipartFile cv;
     @NotNull
     private String profile;
     @NotNull

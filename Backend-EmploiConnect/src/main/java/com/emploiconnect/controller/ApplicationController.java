@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -39,6 +40,22 @@ public class ApplicationController {
         }else{
             return ResponseMessage.created("Application created successfully" ,createdApplication);
         }
+    }
+
+    @PostMapping("/admin/{offerId}")
+    public ResponseEntity<ApplicationResponseDto> createApplicationNew(
+            @RequestPart("file") MultipartFile file,
+            @RequestParam("title") String title,
+            @RequestParam("profile") String profile,
+            @PathVariable Long offerId) {
+        ApplicationRequestDto applicationRequestDto = new ApplicationRequestDto();
+        applicationRequestDto.setTitle(title);
+        applicationRequestDto.setProfile(profile);
+        // Optionally, set other fields in the applicationRequestDto
+
+        ApplicationResponseDto createdApplication = applicationService.createApplicationNew(applicationRequestDto, file, offerId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdApplication);
     }
 
     @GetMapping("/reject/count")

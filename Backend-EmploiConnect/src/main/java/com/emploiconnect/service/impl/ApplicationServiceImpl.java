@@ -18,17 +18,30 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import java.nio.file.*;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
 @Service
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
+
     private final ApplicationRepository applicationRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final OfferRepository offerRepository;
+    private FileStorageService fileStorageService;
     @Override
     public List<ApplicationResponseDto> getAllApplications() {
         List<Application> applications=applicationRepository.findAll();
@@ -43,9 +56,20 @@ public class ApplicationServiceImpl implements ApplicationService {
         // Create a new Application entity
         Application application = new Application();
         application.setTitle(applicationRequestDto.getTitle());
-        application.setCv(applicationRequestDto.getCv());
+        //application.setCv(applicationRequestDto.getCv());
         application.setProfile(applicationRequestDto.getProfile());
         application.setStatus(ApplicationStatus.PENDING);
+
+        // Store the uploaded CV file
+        MultipartFile cvFile = applicationRequestDto.getCv();
+        if (cvFile != null) {
+            try {
+                String fileName = fileStorageService.storeFile(cvFile);
+                application.setCv(fileName);
+            } catch (IOException ex) {
+                throw new RuntimeException("Could not store CV file. Please try again!", ex);
+            }
+        }
 
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
@@ -69,6 +93,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new OperationException("Candidat is already registered for the offer");
         }
 
+
         // Save the application to the database
         Application savedApplication = applicationRepository.save(application);
 
@@ -77,6 +102,100 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         // Return the ApplicationResponseDto
         return applicationResponseDto;
+    }
+    @Override
+    public ApplicationResponseDto createApplicationNew(ApplicationRequestDto applicationRequestDto,
+                                                    MultipartFile file, Long offerId) {
+        // Validate file and parameters
+        if (file == null || file.isEmpty() || StringUtils.isEmpty(applicationRequestDto.getTitle()) ||
+                StringUtils.isEmpty(applicationRequestDto.getProfile())) {
+            throw new IllegalArgumentException("File, title, and profile cannot be empty");
+        }
+
+        // Store the file
+        String fileName = storeFile(file);
+
+        // Create your application entity and save it to the database
+        Application application = new Application();
+        application.setTitle(applicationRequestDto.getTitle());
+        application.setProfile(applicationRequestDto.getProfile());
+        application.setCv(fileName);
+        application.setStatus(ApplicationStatus.PENDING);
+        // Other application entity properties initialization
+
+        // Retrieve and set the offer
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + offerId));
+        application.setOffer(offer);
+
+        // Store the user
+        //Retrieve the Authentication object
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Extract the email or username of the authenticated user
+        String userEmail = authentication.getName();
+
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found for email: " + userEmail));
+
+        application.setUser(user);
+
+        // Check if the user has already applied for the offer
+        boolean isUserApplied = applicationRepository.existsByUserIdAndOfferId(user.getId(), offerId);
+        if (isUserApplied) {
+            throw new OperationException("Candidate is already registered for the offer");
+        }
+
+        // Save the application entity to the database
+        Application savedApplication = applicationRepository.save(application);
+
+        // Map the saved application entity to ApplicationResponseDto
+        ApplicationResponseDto responseDto =modelMapper.map(savedApplication, ApplicationResponseDto.class);
+
+        return responseDto;
+    }
+    private static final String UPLOAD_DIR = "src/main/java/com/emploiconnect/uploads";
+
+    private String storeFile(MultipartFile file) {
+        try {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            Path uploadPath = Paths.get(UPLOAD_DIR).toAbsolutePath().normalize();
+            Files.createDirectories(uploadPath);
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            return fileName;
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to store file: " + ex.getMessage(), ex);
+        }
+    }
+    /*private static final String BUCKET_NAME = "emploi-connect-4895a.appspot.com"; // Replace with your Firebase Storage bucket name
+
+    public String storeFile(MultipartFile file) {
+        try {
+            // Generate a random file name to prevent collisions
+            String fileName = UUID.randomUUID().toString() + getFileExtension(file.getOriginalFilename());
+
+            // Initialize the Firebase Storage client
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+
+            // Create a BlobId and BlobInfo
+            BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(file.getContentType()).build();
+
+            // Upload the file to Firebase Storage
+            storage.create(blobInfo, file.getBytes());
+
+            // Return the file name (or file path if needed)
+            return fileName;
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to store file: " + ex.getMessage(), ex);
+        }
+    }*/
+
+    // Helper method to get file extension
+    private String getFileExtension(String fileName) {
+        int dotIndex = fileName.lastIndexOf(".");
+        return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
     }
     @Override
     public ApplicationResponseDto updateStatusToRejected(Long id){
@@ -121,7 +240,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         // Create a new Application entity
         Application application = new Application();
         application.setTitle(applicationRequestDto.getTitle());
-        application.setCv(applicationRequestDto.getCv());
+        //application.setCv(applicationRequestDto.getCv());
         application.setProfile(applicationRequestDto.getProfile());
         application.setStatus(ApplicationStatus.PENDING);
 
