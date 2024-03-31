@@ -23,6 +23,9 @@ import { CreateCompanyComponent } from './components/company/create-company/crea
 import { ListUsersComponent } from './components/dashboard/list-users/list-users.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarDashboardComponent } from './components/shared/navbar-dashboard/navbar-dashboard.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environment/environment';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,9 @@ import { NavbarDashboardComponent } from './components/shared/navbar-dashboard/n
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

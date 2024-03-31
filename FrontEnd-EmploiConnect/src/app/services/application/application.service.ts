@@ -15,9 +15,9 @@ export class ApplicationService {
   saveApplication(application: ApplicationRequestDto,offerId:number): Observable<ApplicationRequestDto> {
     return this.http.post<ApplicationRequestDto>(`${environment.apiUrl}/applications/${offerId}`,application);
   }
-  saveApplicationNew(formData: FormData, offerId: number): Observable<ApplicationRequestDto> {
-    return this.http.post<ApplicationRequestDto>(`${environment.apiUrl}/applications/admin/${offerId}`, formData);
-  }
+  // saveApplicationNew(formData: FormData, offerId: number): Observable<ApplicationRequestDto> {
+  //   return this.http.post<ApplicationRequestDto>(`${environment.apiUrl}/applications/admin/${offerId}`, formData);
+  // }
 
   getAllApplications(): Observable<ApplicationResponseDTO[]> {
     return this.http.get<ApplicationResponseDTO[]>(`${environment.apiUrl}/applications`);
