@@ -16,7 +16,8 @@ public class ApplicationRequestDto {
     @NotNull
     private String title;
     @NotNull
-    private MultipartFile cv;
+    //private MultipartFile cv;
+    private String cv;
     @NotNull
     private String profile;
     @NotNull

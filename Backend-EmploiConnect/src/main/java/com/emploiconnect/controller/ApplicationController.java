@@ -42,7 +42,7 @@ public class ApplicationController {
         }
     }
 
-    @PostMapping("/admin/{offerId}")
+   /* @PostMapping("/admin/{offerId}")
     public ResponseEntity<ApplicationResponseDto> createApplicationNew(
             @RequestPart("file") MultipartFile file,
             @RequestParam("title") String title,
@@ -56,7 +56,7 @@ public class ApplicationController {
         ApplicationResponseDto createdApplication = applicationService.createApplicationNew(applicationRequestDto, file, offerId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdApplication);
-    }
+    }*/
 
     @GetMapping("/reject/count")
     public ResponseEntity<Long> countRejectedApplications() {

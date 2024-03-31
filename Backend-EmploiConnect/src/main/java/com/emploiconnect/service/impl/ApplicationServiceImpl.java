@@ -56,12 +56,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         // Create a new Application entity
         Application application = new Application();
         application.setTitle(applicationRequestDto.getTitle());
-        //application.setCv(applicationRequestDto.getCv());
+        application.setCv(applicationRequestDto.getCv());
         application.setProfile(applicationRequestDto.getProfile());
         application.setStatus(ApplicationStatus.PENDING);
 
         // Store the uploaded CV file
-        MultipartFile cvFile = applicationRequestDto.getCv();
+       /* MultipartFile cvFile = applicationRequestDto.getCv();
         if (cvFile != null) {
             try {
                 String fileName = fileStorageService.storeFile(cvFile);
@@ -69,7 +69,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             } catch (IOException ex) {
                 throw new RuntimeException("Could not store CV file. Please try again!", ex);
             }
-        }
+        }*/
 
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + applicationRequestDto.getOfferId()));
