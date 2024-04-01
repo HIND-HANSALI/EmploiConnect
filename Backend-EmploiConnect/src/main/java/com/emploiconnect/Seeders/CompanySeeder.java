@@ -38,7 +38,7 @@ public class CompanySeeder implements CommandLineRunner {
                 .location("Sala Al Jadida, Maroc")
                 .foundationDate(LocalDate.of(2000, 1, 1))
                 .specializations("Développement & Intégration de services, Bureau d'études Très Haut Débit, Digital, Centre de Services et Ingénierie")
-                .description("Depuis sa création en 2000, Sofrecom Maroc s’est imposé localement comme acteur incontournable des nouvelles technologies de l’information et de la communication à travers ses activités d’ingénierie logicielle")
+                .description("Depuis sa création en 2000, Sofrecom Maroc s’est imposé localement comme acteur incontournable des nouvelles technologies de l’information et de la communication")
                 .isDefault(false)
                 .build();
         Company itRoadConsulting = Company.builder()
@@ -47,7 +47,7 @@ public class CompanySeeder implements CommandLineRunner {
                 .location("Casablanca, Grand Casablanca")
                 .foundationDate(LocalDate.of(2012, 1, 1))
                 .specializations("Conseil et Audit SI, Services d'Ingénierie Informatique, Digital Market, Développement Web/Mobile, Business Intelligence, Edition SI et Formation IT")
-                .description("Acteur innovant dans le domaine des systèmes d’information, IT Road Consulting a mobilisé les meilleures compétences pour répondre aux impératifs de performance de ses clients. Taille de l’entreprise : 51-200 employés. Siège social : Casablanca, Grand Casablanca.")
+                .description("Acteur innovant dans le domaine des systèmes d’information, IT Road Consulting a mobilisé les meilleures compétences pour répondre aux impératifs de performance de ses clients. ")
                 .isDefault(false)
                 .build();
         Company cegedimMaroc = Company.builder()
@@ -56,7 +56,7 @@ public class CompanySeeder implements CommandLineRunner {
                 .location("Agadir,Maroc")
                 .foundationDate(LocalDate.of(2008, 1, 1))
                 .specializations("Gestion des flux numériques de l’écosystème santé et BtoB")
-                .description("Taille de l’entreprise : 5 001-10 000 employés. Cegedim Maroc est un acteur majeur dans le secteur des services et du conseil en informatique, spécialisé dans la gestion des flux numériques de l’écosystème santé et BtoB, ainsi que dans la conception de logiciels métier destinés aux professionnels de santé et de l’assurance.")
+                .description("Taille de l’entreprise : 5 001-10 000 employés. Cegedim Maroc est un acteur majeur dans le secteur des services et du conseil en informatique, spécialisé dans la gestion des flux numériques de l’écosystème santé et BtoB, ainsi que dans la conception .")
                 .isDefault(false)
                 .build();
         Company intelciaITSolutions = Company.builder()

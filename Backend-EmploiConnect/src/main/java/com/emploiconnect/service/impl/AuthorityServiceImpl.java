@@ -18,11 +18,11 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public List<Authority> getAllByName(List<AuthorityEnum> authorities) {
-        List<String> usersAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
-        if (usersAuthorities.contains(AuthorityEnum.VIEW_AUTHORITIES.toString())) {
+        //List<String> usersAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+        //if (usersAuthorities.contains(AuthorityEnum.VIEW_AUTHORITIES.toString())) {
             return authorityRepository.findAllByName(authorities);
-        }
-        return null;
+        //}
+        //return null;
     }
     @Override
     public Optional<Authority> getByName(AuthorityEnum authorityEnum) {
