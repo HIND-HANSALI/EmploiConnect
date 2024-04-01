@@ -163,7 +163,7 @@ section {
     fill: #47aeff;
   }
   
-  .services .iconbox-orange i {
+  /* .services .iconbox-orange i {
     color: #ffa76e;
   }
   
@@ -222,7 +222,7 @@ section {
   .services .iconbox-teal:hover .icon path {
     fill: #11dbcf;
   }
-  
+   */
   /*--------------------------------------------------------------
   # Cta
   --------------------------------------------------------------*/
