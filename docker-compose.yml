@@ -1,0 +1,37 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: emploiconnectdb
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+
+
+  emploiconnectbackend:
+    image: "emploiconnectback:v1"
+    build:
+      context: Backend-EmploiConnect
+      dockerfile: Dockerfile
+    container_name: emploiconnectbackend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/emploiconnectdb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysql
+
+  emploiconnectfrontend:
+    image: "emploiconnectfront:v1"
+    build:
+      context: Frontend-EmploiConnect
+      dockerfile: Dockerfile
+    container_name: emploiconnectfront
+    ports:
+      - "4200:4200"
+    depends_on:
+      - emploiconnectbackend
