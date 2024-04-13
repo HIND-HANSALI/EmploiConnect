@@ -71,7 +71,7 @@ export class RegisterAppliactionComponent implements OnInit {
         profile: this.applicationForm.get('profile')?.value || '',
         cv: downloadURL
       };
-
+      console.log('formData successfully:', formData);
 
 
     this.applicationService.saveApplication(formData,this.offerId).subscribe(

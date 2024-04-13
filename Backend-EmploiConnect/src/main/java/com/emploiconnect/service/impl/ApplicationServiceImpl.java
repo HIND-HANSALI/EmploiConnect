@@ -168,6 +168,8 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new RuntimeException("Failed to store file: " + ex.getMessage(), ex);
         }
     }
+
+
     /*private static final String BUCKET_NAME = "emploi-connect-4895a.appspot.com"; // Replace with your Firebase Storage bucket name
 
     public String storeFile(MultipartFile file) {
@@ -214,6 +216,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         // Return the ApplicationResponseDto
         return applicationResponseDto;
     }
+
     @Override
     public ApplicationResponseDto updateStatusToApproved(Long id){
 

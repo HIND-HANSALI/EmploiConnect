@@ -73,7 +73,7 @@
                                             'text-danger': application.status === 'REJECTED',
                                             'text-warning': application.status === 'PENDING'
                                         }">{{ application.status }}</td>
-                                        <td>{{ application.cv}}</td>
+                                        <td>{{ application.cv.slice(0, 25)}}</td>
                                         <td class=" ">
                                             <button href="" class="btn btn-link p-0 border-0" (click)="approveApplication(application.id)"><i class="lni lni-checkmark-circle fw-bold fs-5 mx-5 text-success"></i></button> 
                                             <button href="" class="btn btn-link p-0 border-0" (click)="rejectApplication(application.id)"><i class="lni lni-ban text-danger fw-bold fs-5"></i></button> 

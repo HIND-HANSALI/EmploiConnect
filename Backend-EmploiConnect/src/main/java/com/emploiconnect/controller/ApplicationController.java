@@ -14,13 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/applications")
-@PreAuthorize("hasRole('ROLE_RECRUITER') || hasRole('ROLE_SUPER_ADMIN')")
 public class ApplicationController {
     private final ApplicationService applicationService;
 
     public ApplicationController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
+
+    @PreAuthorize("hasRole('ROLE_RECRUITER') || hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping
     public ResponseEntity<List<ApplicationResponseDto>> getAllApplications(){
         List<ApplicationResponseDto> applications=applicationService.getAllApplications();
@@ -31,6 +32,7 @@ public class ApplicationController {
             //return ResponseMessage.ok("Success" ,applications );
         }
     }
+
     @PostMapping("/{offerId}")
     public ResponseEntity<ApplicationResponseDto> createApplication(@RequestBody ApplicationRequestDto applicationRequestDto,@PathVariable Long offerId) {
         ApplicationResponseDto createdApplication = applicationService.createApplication(applicationRequestDto,offerId);
@@ -42,32 +44,21 @@ public class ApplicationController {
         }
     }
 
-   /* @PostMapping("/admin/{offerId}")
-    public ResponseEntity<ApplicationResponseDto> createApplicationNew(
-            @RequestPart("file") MultipartFile file,
-            @RequestParam("title") String title,
-            @RequestParam("profile") String profile,
-            @PathVariable Long offerId) {
-        ApplicationRequestDto applicationRequestDto = new ApplicationRequestDto();
-        applicationRequestDto.setTitle(title);
-        applicationRequestDto.setProfile(profile);
-        // Optionally, set other fields in the applicationRequestDto
-
-        ApplicationResponseDto createdApplication = applicationService.createApplicationNew(applicationRequestDto, file, offerId);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdApplication);
-    }*/
-
+    @PreAuthorize("hasRole('ROLE_RECRUITER') || hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping("/reject/count")
     public ResponseEntity<Long> countRejectedApplications() {
         long count = applicationService.countRejectedApplications();
         return ResponseEntity.ok(count);
     }
+
+    @PreAuthorize("hasRole('ROLE_RECRUITER') || hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping("/approve/count")
     public ResponseEntity<Long> countApprovedApplications() {
         long count = applicationService.countApprovedApplications();
         return ResponseEntity.ok(count);
     }
+
+    @PreAuthorize("hasRole('ROLE_RECRUITER') || hasRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/{id}/reject")
     public ResponseEntity<ApplicationResponseDto> updateStatusToRejected(@PathVariable Long id) {
         ApplicationResponseDto updatedApplication = applicationService.updateStatusToRejected(id);
@@ -96,4 +87,23 @@ public class ApplicationController {
             return ResponseMessage.created("Application created successfully" ,createdApplication);
         }
     }
+
+
+
+
+   /* @PostMapping("/admin/{offerId}")
+    public ResponseEntity<ApplicationResponseDto> createApplicationNew(
+            @RequestPart("file") MultipartFile file,
+            @RequestParam("title") String title,
+            @RequestParam("profile") String profile,
+            @PathVariable Long offerId) {
+        ApplicationRequestDto applicationRequestDto = new ApplicationRequestDto();
+        applicationRequestDto.setTitle(title);
+        applicationRequestDto.setProfile(profile);
+        // Optionally, set other fields in the applicationRequestDto
+
+        ApplicationResponseDto createdApplication = applicationService.createApplicationNew(applicationRequestDto, file, offerId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdApplication);
+    }*/
 }
